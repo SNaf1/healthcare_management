@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Welcome, {{ user.name }}</h2>
+  <!-- Other content -->
+
+  <a href="{% url 'profile' %}">Profile</a>
+
+  <!-- Logout Button -->
+  <form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+  </form>
+{% endblock %}
