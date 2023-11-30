@@ -82,14 +82,17 @@ class PatientHospitalEvaluation(models.Model):
 
 
 class Schedule(models.Model):
-    slot = models.IntegerField(primary_key=True)
+    slot = models.AutoField(primary_key=True)
     date = models.DateField()
     start_time = models.TimeField()
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     consultation_fee = models.DecimalField(max_digits=10, decimal_places=2)
 
+    class Meta:
+        unique_together = ['doctor', 'date', 'start_time']
+
     def __str__(self):
-        return f"{self.doctor} - Date: {self.date}, Time: {self.start_time}"
+        return f"{self.doctor} - Date: {self.date}, Time: {self.start_time}, Slot {self.slot}"
 
 class Appointment(models.Model):
     a_id = models.AutoField(primary_key=True)

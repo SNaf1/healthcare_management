@@ -116,3 +116,5 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 AUTH_USER_MODEL = 'website.Patient'
+
+SESSION_COOKIE_NAME = 'admin_sessionid' if '/admin/' in MIDDLEWARE else 'patient_sessionid'

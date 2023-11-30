@@ -7,27 +7,8 @@
   <h2>Sign Up</h2>
   <form method="post" action="{% url 'signup' %}">
     {% csrf_token %}
-    <label for="id_email">Email:</label>
-    <input type="email" name="email" required>
-    <br>
-    <label for="id_username">Username:</label>
-    <input type="text" name="username" required>
-    <br>
-    <label for="id_phone">Phone:</label>
-    <input type="text" name="phone" required>
-    <br>
-    <label for="id_age">Age:</label>
-    <input type="number" name="age" required>
-    <br>
-    <label for="id_name">Name:</label>
-    <input type="text" name="name" required>
-    <br>
-    <label for="id_gender">Gender:</label>
-    <input type="text" name="gender" required>
-    <br>
-    <label for="id_password1">Password:</label>
-    <input type="password" name="password1" required>
-    <br>
+    {{ form.as_p }}
     <button type="submit">Sign Up</button>
   </form>
 {% endblock %}
+

@@ -4,25 +4,22 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django import forms
 from django.contrib.auth.decorators import login_required
+from .forms import PatientForm
 
 def home(request):
     return render(request, 'home.html', {})
 
 def signup_view(request):
     if request.method == 'POST':
-        user = Patient.objects.create_user(
-            username=request.POST['username'],
-            email=request.POST['email'],
-            phone=request.POST['phone'],
-            age=request.POST['age'],
-            name=request.POST['name'],
-            gender=request.POST['gender'],
-            password=request.POST['password1']
-        )
-        login(request, user)
-        return redirect('home')
+        form = PatientForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
     else:
-        return render(request, 'signup.html')
+        form = PatientForm()
+
+    return render(request, 'signup.html', {'form': form})
 
 
 def login_view(request):
