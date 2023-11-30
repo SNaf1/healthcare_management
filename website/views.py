@@ -11,7 +11,7 @@ def home(request):
 def signup_view(request):
     if request.method == 'POST':
         user = Patient.objects.create_user(
-            username=request.POST['username'],  # Use the provided username
+            username=request.POST['username'],
             email=request.POST['email'],
             phone=request.POST['phone'],
             age=request.POST['age'],
