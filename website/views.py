@@ -55,3 +55,4 @@ def profile_view(request):
     context = {'patient': patient}
     return render(request, 'profile.html', context)
 
+# hello boss
