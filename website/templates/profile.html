@@ -8,5 +8,14 @@
   <p>Gender: {{ patient.gender }}</p>
 
   <!-- Other content -->
+  <form method="post" action="{% url 'edit' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="Submit" class="btn btn-light">Edit</button>
+  </form>
+  <br>
+  <a href="{% url 'delete_account' %}">
+    <button type="button" class="btn btn-danger">Delete Account</button>
+  </a>
 
 {% endblock %}

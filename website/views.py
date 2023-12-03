@@ -5,6 +5,7 @@ from django.contrib.auth import login, logout, authenticate
 from django import forms
 from django.contrib.auth.decorators import login_required
 from .forms import PatientForm
+from django.contrib import messages
 
 def home(request):
     return render(request, 'home.html', {})
@@ -55,4 +56,33 @@ def profile_view(request):
     context = {'patient': patient}
     return render(request, 'profile.html', context)
 
-# hello boss
+# Ridhwan
+@login_required
+def edit(request):
+    user = request.user
+    patient = Patient.objects.get(username=user.username)
+
+    if request.method == 'POST':
+        form = PatientForm(request.POST, instance=patient)
+        if form.is_valid():
+            form.save()
+            # messages.success(request, "Profile updated successfully.")
+            return redirect('profile')
+    else:
+        form = PatientForm(instance=patient)
+
+    context = {'form': form}
+    return render(request, 'edit.html', context)
+
+
+@login_required
+def delete_account(request):
+    if request.method == 'POST':
+        # Delete the user account
+        request.user.delete()
+        
+        # Log out the user
+        messages.success(request, 'Your account has been deleted successfully.')
+        return redirect('logout')  # You need to implement the 'logout' view in your project
+
+    return render(request, 'delete.html')
