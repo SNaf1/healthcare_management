@@ -1,0 +1,86 @@
+<!-- select_time.html -->
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    form {
+        background-color: #ffffff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        padding: 20px;
+        width: 300px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #333333;
+    }
+
+    ul.messages {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    ul.messages li {
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 4px;
+    }
+
+    ul.messages li.success {
+        background-color: #4CAF50;
+        color: #ffffff;
+    }
+
+    ul.messages li.error {
+        background-color: #ff5252;
+        color: #ffffff;
+    }
+
+    input[type="hidden"] {
+        display: none;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: #ffffff;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<form method="post" action="{% url 'select_time' doctor_id=doctor.d_nid date=date %}">
+    {% csrf_token %}
+    <h2>Select Time</h2>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <input type="hidden" name="date" value="{{ date }}">
+    <input type="hidden" name="doctor" value="{{ doctor }}">
+    {{ time_form.as_p }}
+
+    <button type="submit">Next</button>
+</form>

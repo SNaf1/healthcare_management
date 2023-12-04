@@ -100,19 +100,29 @@ class Appointment(models.Model):
     username = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True)
     d_nid = models.ForeignKey(Doctor, on_delete=models.CASCADE, null=True)
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE, null=True)
+    status = models.CharField(max_length=20, default='Pending')
 
     
     def __str__(self):
-        return self.a_id
+        return str(self.a_id)
 
 class Payment(models.Model):
     payment_id = models.AutoField(primary_key=True)
     method = models.CharField(max_length=50)
-    appointments = models.ManyToManyField(Appointment)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    appointment = models.OneToOneField(Appointment, on_delete=models.CASCADE, null=True, blank=True)
 
     def calculate_total_price(self):
-        self.total_price = sum(appointment.schedule.consultation_fee for appointment in self.appointments.all())
+        # Calculate total price based on the associated appointment's schedule
+        if self.appointment and self.appointment.schedule:
+            self.total_price = self.appointment.schedule.consultation_fee
+        else:
+            self.total_price = 0  # Handle the case where appointment or schedule is not available
+
+    def save(self, *args, **kwargs):
+        # Override save method to calculate total price before saving
+        self.calculate_total_price()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return str(self.payment_id)
@@ -130,27 +140,5 @@ class HospitalRoom(models.Model):
 
     def __str__(self):
         return f"{self.branch} - Room No: {self.room_no}"
-
-
-    # groups = models.ManyToManyField(
-    #     Group,
-    #     verbose_name='groups',
-    #     blank=True,
-    #     help_text=(
-    #         'The groups this user belongs to. A user will get all permissions '
-    #         'granted to each of their groups.'
-    #     ),
-    #     related_name='patients',  # Use 'patients' instead of 'patient_set'
-    #     related_query_name='patient',
-    # )
-    
-    # user_permissions = models.ManyToManyField(
-    #     Permission,
-    #     verbose_name='user permissions',
-    #     blank=True,
-    #     help_text='Specific permissions for this user.',
-    #     related_name='patients_permissions',  # Use 'patients_permissions' instead of 'patient_set'
-    #     related_query_name='patient',
-    # )
 
     

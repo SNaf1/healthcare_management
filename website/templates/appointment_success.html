@@ -1,0 +1,29 @@
+<!-- templates/appointment_success.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Your appointment is confirmed!</h2>
+  
+  <p>Appointment ID: {{ appointment.a_id }}</p>
+
+  {% if appointment.d_nid %}
+    <p>Doctor: {{ appointment.d_nid.name }}</p>
+  {% else %}
+    <p>Doctor information not available</p>
+  {% endif %}
+
+  {% if appointment.schedule %}
+    <p>Date: {{ appointment.schedule.date }}</p>
+    <p>Time: {{ appointment.schedule.start_time }}</p>
+  {% else %}
+    <p>Schedule information not available</p>
+  {% endif %}
+
+  {% if appointment.payment %}
+    <p>Total Price: {{ appointment.payment.total_price }}</p>
+  {% else %}
+    <p>Payment information not available</p>
+  {% endif %}
+  
+{% endblock %}

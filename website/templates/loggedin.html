@@ -11,4 +11,7 @@
     {% csrf_token %}
     <button type="submit">Logout</button>
   </form>
+
+  <!-- Link to Book Appointment -->
+  <a href="{% url 'book_appointment' %}">Book Appointment</a>
 {% endblock %}

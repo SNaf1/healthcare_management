@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Confirm Payment</h2>
+
+  <form method="post" action="{% url 'confirm_payment' doctor_id=request.session.selected_doctor date=request.session.selected_date time=request.session.selected_time %}">
+    {% csrf_token %}
+    {{ payment_form }}
+    <button type="submit">Submit</button>
+</form>
+
+
+  {% if payment_form.errors %}
+    <ul class="errorlist">
+      {% for error in payment_form.errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}
