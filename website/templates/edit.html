@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
-<!-- {% block title %}Update Informations - Healthcare App{% endblock %} -->
+
+{% block title %}Edit Profile - Healthcare App{% endblock %}
 
 {% block content %}
   <h2>Edit Profile</h2>
@@ -8,7 +9,7 @@
     {% csrf_token %}
     {{ form.as_p }}
     <!-- <a href="{% url 'profile' %}"> -->
-      <button type="submit">Update</button>
+      <button type="submit">Save Changes</button>
     <!-- </a> -->
   </form>
 {% endblock %}

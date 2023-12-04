@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django import forms
 from django.contrib.auth.decorators import login_required
-from .forms import PatientForm
+from .forms import PatientForm, PatientEditForm
 from django.contrib import messages
 
 def home(request):
@@ -63,13 +63,13 @@ def edit(request):
     patient = Patient.objects.get(username=user.username)
 
     if request.method == 'POST':
-        form = PatientForm(request.POST, instance=patient)
+        form = PatientEditForm(request.POST, instance=patient)
         if form.is_valid():
             form.save()
             # messages.success(request, "Profile updated successfully.")
             return redirect('profile')
     else:
-        form = PatientForm(instance=patient)
+        form = PatientEditForm(instance=patient)
 
     context = {'form': form}
     return render(request, 'edit.html', context)
