@@ -10,6 +10,9 @@ from formtools.wizard.views import SessionWizardView
 from datetime import date
 
 def home(request):
+    if request.user.is_authenticated:
+        return redirect('loggedin')
+        
     return render(request, 'home.html', {})
 
 def signup_view(request):
