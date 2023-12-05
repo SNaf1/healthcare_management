@@ -62,7 +62,9 @@ class TimeForm(forms.Form):
 
         if date and doctor:
             # Check if the selected time is available for the selected doctor and date
-            available_times = Schedule.objects.filter(doctor=doctor, date=date).values_list('start_time', flat=True)
+            available_times = Schedule.objects.filter(doctor=doctor, date=date).exclude(
+                appointment__isnull=False, appointment__status='Confirmed'
+            ).values_list('start_time', flat=True)
             print(available_times)
             time_choices = [(str(time), time.strftime('%I:%M %p')) for time in available_times]
             self.fields['time'].choices = time_choices

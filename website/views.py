@@ -102,7 +102,7 @@ def select_time_view(request, doctor_id, date):
         if form.is_valid():
             time = form.cleaned_data['time']
 
-             # Check if an appointment already exists for the selected date and time
+            # Check if an appointment already exists for the selected date and time
             existing_appointment = Appointment.objects.filter(
                 d_nid=doctor,
                 schedule__date=date,
@@ -120,7 +120,16 @@ def select_time_view(request, doctor_id, date):
 
             return redirect('confirm_payment', doctor_id=doctor_id, date=date, time=time)
     else:
+        available_times = Schedule.objects.filter(doctor=doctor, date=date).exclude(
+            appointment__isnull=False, appointment__status='Confirmed'
+        ).values_list('start_time', flat=True)
+
+        if not available_times:
+            messages.error(request, 'All time slots have been booked for this date. Please select another date.')
+            return redirect('select_date', doctor_id=doctor_id)
+
         form = TimeForm(doctor=doctor, date=date)
+
 
 
     # Debugging statements
