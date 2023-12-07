@@ -107,6 +107,7 @@ def select_time_view(request, doctor_id, date):
                 d_nid=doctor,
                 schedule__date=date,
                 schedule__start_time=time,
+                status='Confirmed',
             ).first()
 
             if existing_appointment:
@@ -173,7 +174,7 @@ def confirm_payment_view(request, doctor_id, date, time):
             payment = Payment()
             payment.method = payment_form.cleaned_data['method']
             payment.appointment = appointment
-            payment.calculate_total_price()
+            # payment.calculate_total_price()
             payment.save()
             
             # Update appointment status to 'Confirmed'

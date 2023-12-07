@@ -16,7 +16,10 @@ class DoctorForm(forms.Form):
         self.fields['doctor'].label_from_instance = self.label_from_instance
 
     def label_from_instance(self, obj):
-        return f"{obj.d_nid} - {obj.name}"
+        label = f"{obj.name} - {obj.d_nid} "
+        # adding hospital info of doctor
+        label += obj.get_hospital_list()
+        return label
 
 
 
@@ -94,4 +97,4 @@ class TimeForm(forms.Form):
     #     return time
 
 class PaymentForm(forms.Form):
-    method = forms.CharField(max_length=50, label='Payment Method')
+    method = forms.CharField(max_length=50, label='Transaction ID')

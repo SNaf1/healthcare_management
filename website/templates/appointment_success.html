@@ -21,7 +21,7 @@
   {% endif %}
 
   {% if appointment.payment %}
-    <p>Total Price: {{ appointment.payment.total_price }}</p>
+    <p>Total Price: {{ appointment.calculate_total_price }}</p>
   {% else %}
     <p>Payment information not available</p>
   {% endif %}

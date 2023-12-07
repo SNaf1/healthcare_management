@@ -12,7 +12,7 @@ class Hospital(models.Model):
         return f"{self.road_no}, {self.city}, {self.zip_code}"
 
     def __str__(self):
-        return self.name
+        return self.branch
 
 class Patient(AbstractUser):
     username = models.CharField(max_length=150, primary_key=True)
@@ -53,16 +53,20 @@ class Doctor(models.Model):
     name = models.CharField(max_length=40)
     hospitals = models.ManyToManyField(Hospital, through='DocSits', through_fields=('doctor', 'hospital'))
 
+    def get_hospital_list(self):
+        hospital_names = [hospital.branch for hospital in self.hospitals.all()]
+        return f"({', '.join(hospital_names)})"
+
     def __str__(self):
         return self.name
 
 class DocSits(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE)
-    chamber_no = models.CharField(max_length=20)
+    chamber_no = models.CharField(max_length=20, unique=True)
 
     def __str__(self):
-        return f"{self.doctor.name} in {self.hospital.name}, Chamber No: {self.chamber_no}"
+        return f"{self.doctor.name} in {self.hospital.branch}, Chamber No: {self.chamber_no}"
 
 class PatientHospitalEvaluation(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
@@ -102,26 +106,27 @@ class Appointment(models.Model):
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE, null=True)
     status = models.CharField(max_length=20, default='Pending')
 
-    
+    def calculate_total_price(self):
+        if self.schedule:
+            return self.schedule.consultation_fee
+        return 0  # Handle the case where schedule is not available
+
     def __str__(self):
         return str(self.a_id)
 
 class Payment(models.Model):
     payment_id = models.AutoField(primary_key=True)
-    method = models.CharField(max_length=50)
+    method = models.CharField(max_length=50, unique=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     appointment = models.OneToOneField(Appointment, on_delete=models.CASCADE, null=True, blank=True)
 
-    def calculate_total_price(self):
-        # Calculate total price based on the associated appointment's schedule
-        if self.appointment and self.appointment.schedule:
-            self.total_price = self.appointment.schedule.consultation_fee
-        else:
-            self.total_price = 0  # Handle the case where appointment or schedule is not available
 
     def save(self, *args, **kwargs):
         # Override save method to calculate total price before saving
-        self.calculate_total_price()
+        if self.appointment:
+            self.total_price = self.appointment.calculate_total_price()
+        else:
+            self.total_price = 0
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -131,7 +136,6 @@ class HospitalRoom(models.Model):
     branch = models.ForeignKey(Hospital, on_delete=models.CASCADE)
     room_no = models.CharField(max_length=10)
     patient = models.OneToOneField(Patient, on_delete=models.SET_NULL, null=True, blank=True)
-    # Other attributes for the hospital room and bookings
 
     class Meta:
         constraints = [
