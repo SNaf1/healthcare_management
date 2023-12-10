@@ -154,4 +154,8 @@ class HospitalRoom(models.Model):
     # )
 
     #superman
+    #Batman
+    #Spiderman
+
+
     
