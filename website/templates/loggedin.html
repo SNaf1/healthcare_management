@@ -6,6 +6,9 @@
 
   <a href="{% url 'profile' %}">Profile</a>
 
+
+  <a href="{% url 'all_hospitals'%}"> Hospitals</a>
+
   <!-- Logout Button -->
   <form method="post" action="{% url 'logout' %}">
     {% csrf_token %}

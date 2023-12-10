@@ -7,12 +7,23 @@ class Hospital(models.Model):
     road_no = models.CharField(max_length=50)
     city = models.CharField(max_length=100)
     zip_code = models.CharField(max_length=20)
+    
 
     def address(self):
         return f"{self.road_no}, {self.city}, {self.zip_code}"
+    
+    def average_review(self):
+        reviews = self.patienthospitalevaluation_set.all()
+        if reviews.exists():
+            return sum(review.ratings for review in reviews) / reviews.count()
+        else:
+            return 0
+
+    # def __str__(self):
+    #     return self.name
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.branch}"
 
 class Patient(AbstractUser):
     username = models.CharField(max_length=150, primary_key=True)
@@ -71,6 +82,9 @@ class PatientHospitalEvaluation(models.Model):
 
     class Meta:
         unique_together = ('patient', 'hospital')
+
+    def __str__(self):
+        return f"{self.patient.username} - {self.hospital.name} - {self.hospital.branch}"
 
 # class PatientDoctorEvaluation(models.Model):
 #     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)

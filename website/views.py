@@ -5,7 +5,9 @@ from django.contrib.auth import login, logout, authenticate
 from django import forms
 from django.contrib.auth.decorators import login_required
 from .forms import PatientForm
-
+from .models import PatientHospitalEvaluation, Hospital
+from .forms import PatientHospitalEvaluationForm
+from django.contrib.auth.decorators import login_required
 def home(request):
     return render(request, 'home.html', {})
 
@@ -55,3 +57,28 @@ def profile_view(request):
     context = {'patient': patient}
     return render(request, 'profile.html', context)
 
+@login_required(login_url='login')  
+def review_form(request):
+    if request.method == 'POST':
+        form = PatientHospitalEvaluationForm(request.POST)
+        if form.is_valid():
+            evaluation = form.save(commit=False)
+            evaluation.patient = request.user
+            evaluation.save()
+            return redirect('review_success')
+    else:
+        form = PatientHospitalEvaluationForm()
+
+    hospitals = Hospital.objects.all()
+    return render(request, 'review_form.html', {'form': form, 'hospitals': hospitals})
+
+
+def review_success(request):
+    return render(request,'review_success.html')
+
+def all_hospitals(request):
+    hospitals = Hospital.objects.all()
+    for hospital in hospitals:
+        hospital.avg_review = hospital.average_review()
+
+    return render(request, 'all_hospitals.html', {'hospitals': hospitals})

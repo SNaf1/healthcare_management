@@ -1,0 +1,22 @@
+<!-- all_hospitals.html -->
+
+<a href="{% url 'review_form' %}">Leave a Review</a>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Hospitals</title>
+</head>
+<body>
+    <h1>All Hospitals</h1>
+    <ul>
+        {% for hospital in hospitals %}
+            <li>
+                {{ hospital.name }} - {{ hospital.branch }}
+                (Average Review: {{ hospital.avg_review|default:0 }}/5)
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+</html>
