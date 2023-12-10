@@ -142,6 +142,14 @@ def my_appointments_view(request):
         # Redirect to login page if user not logged in
         return redirect('login')
 
+def delete_appointment_view(request, appointment_id):
+    appointment = get_object_or_404(Appointment, a_id=appointment_id)
+
+    # Check if the logged-in user owns the appointment
+    if request.user == appointment.username:
+        appointment.delete()
+
+    return redirect('my_appointments')
 
 def book_appointment_view(request):
     if request.method == 'POST':

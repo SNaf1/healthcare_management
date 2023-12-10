@@ -9,6 +9,12 @@
             <strong>Doctor:</strong> {{ appointment.d_nid.name }}
             <br>
             <strong>Status:</strong> {{ appointment.status }}
+
+            <!-- Form for deleting the appointment -->
+            <form method="post" action="{% url 'delete_appointment' appointment.a_id %}">
+                {% csrf_token %}
+                <button type="submit">Delete Appointment</button>
+            </form>
         </li>
     {% endfor %}
 </ul>
