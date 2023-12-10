@@ -16,5 +16,8 @@ urlpatterns = [
     path('book-hospital-room/', views.book_hospital_room_view, name='book_hospital_room'),
     path('select-room/<str:branch_id>/', views.select_room_view, name='select_room'),
     path('booking-successful/<str:branch_id>/<str:room_id>/', views.booking_successful_view, name='booking_successful'),
+    path('med_his_update/', views.update_medical_history, name='update_medical_history'),
+    path('edit/', views.edit, name='edit'),
+    path('delete/', views.delete_account, name='delete_account'),
 ]
 

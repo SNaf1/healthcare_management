@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Doctor, Patient, Appointment, Schedule, Payment, Hospital, HospitalRoom
+from .models import Doctor, Patient, Appointment, Schedule, Payment, Hospital, HospitalRoom, MedicalHistory, Medicine, Disease
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django import forms
 from django.contrib.auth.decorators import login_required
-from .forms import PatientForm, DoctorForm, DateForm, TimeForm, PaymentForm, HospitalBranchForm, HospitalRoomForm
+from .forms import PatientForm, DoctorForm, DateForm, TimeForm, PaymentForm, HospitalBranchForm, HospitalRoomForm, PatientEditForm, MedicalHistoryUpdateForm, DiseaseForm, MedicineForm, MedicineFormSet, DiseaseFormSet
 from django.contrib import messages
 from formtools.wizard.views import SessionWizardView
 from datetime import date
@@ -58,11 +58,80 @@ def loggedin_view(request):
 def profile_view(request):
     user = request.user
     patient = Patient.objects.get(username=user.username)
-    context = {'patient': patient}
+
+    # Get the medical history for the patient
+    medical_history = MedicalHistory.objects.filter(patient=user).first()
+
+    context = {
+        'patient': patient,
+        'medical_history': medical_history,
+    }
     return render(request, 'profile.html', context)
 
-# def book_appointment_view(request):
-#     return render(request, 'appointment.html')
+#Ridhwan's part
+@login_required
+def edit(request):
+    user = request.user
+    patient = Patient.objects.get(username=user.username)
+
+    if request.method == 'POST':
+        form = PatientEditForm(request.POST, instance=patient)
+        if form.is_valid():
+            form.save()
+            # messages.success(request, "Profile updated successfully.")
+            return redirect('profile')
+    else:
+        form = PatientEditForm(instance=patient)
+
+    context = {'form': form}
+    return render(request, 'edit.html', context)
+
+
+@login_required
+def delete_account(request):
+    if request.method == 'POST':
+        # Delete the user account
+        request.user.delete()
+        
+        # Log out the user
+        messages.success(request, 'Your account has been deleted successfully.')
+        return redirect('logout')  # You need to implement the 'logout' view in your project
+
+    return render(request, 'delete.html')
+
+
+def update_medical_history(request):
+    medical_history = MedicalHistory.objects.filter(patient=request.user).first()
+
+    if not medical_history:
+        # If MedicalHistory doesn't exist, create a new one
+        medical_history = MedicalHistory.objects.create(patient=request.user)
+
+    if request.method == 'POST':
+        formset_disease = DiseaseFormSet(request.POST, instance=medical_history, prefix='disease')
+        formset_medicine = MedicineFormSet(request.POST, instance=medical_history, prefix='medicine')
+        main_form = MedicalHistoryUpdateForm(request.POST, instance=medical_history)
+
+        if formset_disease.is_valid() and formset_medicine.is_valid() and main_form.is_valid():
+            main_form.save()
+            formset_disease.save()
+            formset_medicine.save()
+
+            return redirect('profile')  # Redirect to a success page
+
+    else:
+        formset_disease = DiseaseFormSet(instance=medical_history, prefix='disease')
+        formset_medicine = MedicineFormSet(instance=medical_history, prefix='medicine')
+        main_form = MedicalHistoryUpdateForm(instance=medical_history)
+
+    context = {
+        'formset_disease': formset_disease,
+        'formset_medicine': formset_medicine,
+        'main_form': main_form,
+        'medical_history': medical_history,
+    }
+
+    return render(request, 'med_his_update.html', context)
 
 def book_appointment_view(request):
     if request.method == 'POST':
@@ -247,8 +316,6 @@ def select_room_view(request, branch_id):
 def booking_successful_view(request, branch_id, room_id):
     hospital_branch = get_object_or_404(Hospital, branch=branch_id)
     booked_room = get_object_or_404(HospitalRoom, room_no=room_id, branch=hospital_branch)
-
-    # Your view logic here...
 
     # Add a success message
     # messages.success(request, f"Room {booked_room.room_no} in {hospital_branch.name} successfully booked!")

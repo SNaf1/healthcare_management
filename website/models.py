@@ -42,10 +42,15 @@ class Disease(models.Model):
     medical_history = models.ForeignKey(MedicalHistory, on_delete=models.CASCADE)
     disease_name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.disease_name
+
 class Medicine(models.Model):
     medical_history = models.ForeignKey(MedicalHistory, on_delete=models.CASCADE)
     medicine_name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.medicine_name
 
 class Doctor(models.Model):
     d_nid = models.IntegerField(primary_key=True)

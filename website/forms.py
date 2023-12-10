@@ -1,5 +1,6 @@
 from django import forms
-from .models import Patient, Appointment, Payment, Schedule, Doctor, Hospital, HospitalRoom
+from django.forms import inlineformset_factory
+from .models import Patient, Appointment, Payment, Schedule, Doctor, Hospital, HospitalRoom, MedicalHistory, Medicine, Disease
 from django.contrib.auth.forms import UserCreationForm
 # from datetime import datetime, time
 
@@ -7,6 +8,12 @@ class PatientForm(UserCreationForm):
     class Meta:
         model = Patient
         fields = ['username', 'email', 'phone', 'age', 'name', 'gender']
+
+#Ridhwan's code
+class PatientEditForm(forms.ModelForm):
+    class Meta:
+        model = Patient
+        fields = ['email', 'phone', 'age', 'name', 'gender']
 
 class DoctorForm(forms.Form):
     doctor = forms.ModelChoiceField(queryset=Doctor.objects.all(), to_field_name='d_nid', label='Select Doctor')
@@ -133,4 +140,42 @@ class HospitalRoomForm(forms.Form):
     def label_from_instance(self, obj):
         return f"Room {obj.room_no}"
 
+#Ridhan's code
+class DiseaseForm(forms.ModelForm):
+    class Meta:
+        model = Disease
+        fields = ['disease_name']
 
+class MedicineForm(forms.ModelForm):
+    class Meta:
+        model = Medicine
+        fields = ['medicine_name']
+
+MedicalHistoryFormSet = inlineformset_factory(
+    MedicalHistory,  # parent model
+    Disease,         # related model
+    form=DiseaseForm,
+    extra=1,          # number of empty forms to display
+    can_delete=True   # allows deleting existing instances
+)
+
+MedicineFormSet = inlineformset_factory(
+    MedicalHistory,  # parent model
+    Medicine,        # related model
+    form=MedicineForm,
+    extra=1,          # number of empty forms to display
+    can_delete=True   # allows deleting existing instances
+)
+
+DiseaseFormSet = inlineformset_factory(
+    MedicalHistory,  # parent model
+    Disease,        # related model
+    form=DiseaseForm,
+    extra=1,          # number of empty forms to display
+    can_delete=True   # allows deleting existing instances
+)
+
+class MedicalHistoryUpdateForm(forms.ModelForm):
+    class Meta:
+        model = MedicalHistory
+        exclude = ['patient']  # Add other fields if needed
