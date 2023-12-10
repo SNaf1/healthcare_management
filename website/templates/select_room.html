@@ -1,0 +1,16 @@
+<form method="post" action="{% url 'select_room' branch_id=hospital_branch.branch %}">
+    {% csrf_token %}
+    <h2>Select Room</h2>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Book Room</button>
+</form>

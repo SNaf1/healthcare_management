@@ -1,0 +1,8 @@
+
+
+<form method="post" action="{% url 'book_hospital_room' %}">
+    {% csrf_token %}
+    <h2>Select Hospital Branch</h2>
+    {{ form.as_p }}
+    <button type="submit">Next</button>
+</form>

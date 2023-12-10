@@ -1,5 +1,5 @@
 from django import forms
-from .models import Patient, Appointment, Payment, Schedule, Doctor
+from .models import Patient, Appointment, Payment, Schedule, Doctor, Hospital, HospitalRoom
 from django.contrib.auth.forms import UserCreationForm
 # from datetime import datetime, time
 
@@ -98,3 +98,39 @@ class TimeForm(forms.Form):
 
 class PaymentForm(forms.Form):
     method = forms.CharField(max_length=50, label='Transaction ID')
+
+# class HospitalRoomBookingForm(forms.Form):
+#     branch = forms.ModelChoiceField(queryset=Hospital.objects.all(), label='Select Branch', empty_label=None)
+
+#     def __init__(self, *args, **kwargs):
+#         super(HospitalRoomBookingForm, self).__init__(*args, **kwargs)
+#         selected_branch = self.fields['branch'].initial
+#         if selected_branch:
+#             available_rooms = HospitalRoom.objects.filter(branch=selected_branch, is_available=True)
+#             self.fields['room'] = forms.ModelChoiceField(queryset=available_rooms, label='Select Room')
+
+#     def clean_branch(self):
+#         branch = self.cleaned_data['branch']
+#         # Update the form with available rooms based on the selected branch
+#         available_rooms = HospitalRoom.objects.filter(branch=branch, is_available=True)
+#         self.fields['room'] = forms.ModelChoiceField(queryset=available_rooms, label='Select Room')
+#         return branch
+
+
+class HospitalBranchForm(forms.Form):
+    branch = forms.ModelChoiceField(queryset=Hospital.objects.all(), to_field_name='pk', label='Select Hospital Branch')
+
+class HospitalRoomForm(forms.Form):
+    room = forms.ModelChoiceField(queryset=HospitalRoom.objects.none(), label='Select Room', widget=forms.RadioSelect)
+
+    def __init__(self, *args, **kwargs):
+        initial = kwargs.pop('initial', {})
+        branch = initial.get('branch')
+        super(HospitalRoomForm, self).__init__(*args, **kwargs)
+        if branch:
+            self.fields['room'].queryset = HospitalRoom.objects.filter(branch=branch, is_available=True)
+
+    def label_from_instance(self, obj):
+        return f"Room {obj.room_no}"
+
+

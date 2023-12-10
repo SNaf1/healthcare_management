@@ -1,5 +1,6 @@
-from django.db import models
+from django.db import models, IntegrityError
 from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.contrib import messages
 
 class Hospital(models.Model):
     branch = models.CharField(max_length=100, primary_key=True)
@@ -63,7 +64,18 @@ class Doctor(models.Model):
 class DocSits(models.Model):
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE)
-    chamber_no = models.CharField(max_length=20, unique=True)
+    chamber_no = models.CharField(max_length=20)
+
+
+    def save(self, *args, **kwargs):
+        # Check if the doctor is already associated with another hospital
+        existing_sits = DocSits.objects.filter(doctor=self.doctor)
+        if existing_sits.exists():
+            # Doctor is already associated with a hospital
+            raise IntegrityError("This doctor is already associated with another hospital.")
+
+        # Proceed with saving the DocSits instance
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.doctor.name} in {self.hospital.branch}, Chamber No: {self.chamber_no}"
@@ -136,13 +148,13 @@ class HospitalRoom(models.Model):
     branch = models.ForeignKey(Hospital, on_delete=models.CASCADE)
     room_no = models.CharField(max_length=10)
     patient = models.OneToOneField(Patient, on_delete=models.SET_NULL, null=True, blank=True)
+    is_available = models.BooleanField(default=True)
 
     class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['branch', 'room_no'], name='unique_room')
-        ]
+        unique_together = ('branch', 'room_no')  # Ensure uniqueness of the combination of branch and room_no
+
 
     def __str__(self):
-        return f"{self.branch} - Room No: {self.room_no}"
+        return f"{self.branch} - Room No: {self.room_no} {'(Available)' if self.is_available else '(Booked)'}"
 
     

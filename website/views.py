@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Doctor, Patient, Appointment, Schedule, Payment
+from .models import Doctor, Patient, Appointment, Schedule, Payment, Hospital, HospitalRoom
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django import forms
 from django.contrib.auth.decorators import login_required
-from .forms import PatientForm, DoctorForm, DateForm, TimeForm, PaymentForm
+from .forms import PatientForm, DoctorForm, DateForm, TimeForm, PaymentForm, HospitalBranchForm, HospitalRoomForm
 from django.contrib import messages
 from formtools.wizard.views import SessionWizardView
 from datetime import date
@@ -201,10 +201,59 @@ def confirm_payment_view(request, doctor_id, date, time):
 
 def appointment_success_view(request):
     appointment_info = request.session.get('selected_appointment')
-
-# Reconstruct the Appointment object
     appointment = Appointment.objects.get(a_id=appointment_info['id'])
-    # payment = request.session.get('payment')
 
     return render(request, 'appointment_success.html', {'appointment': appointment})
+
+def book_hospital_room_view(request):
+    branches = Hospital.objects.all()
+
+    # Check if the patient has already booked a room
+    if HospitalRoom.objects.filter(patient=request.user).exists():
+        messages.error(request, 'You already have a room booked. Cancel your booking to book another room, as seats are limited.')
+        return redirect('loggedin')
+
+    if request.method == 'POST':
+        form = HospitalBranchForm(request.POST)
+        if form.is_valid():
+            selected_branch = form.cleaned_data['branch']
+            return redirect('select_room', branch_id=selected_branch.branch)
+    else:
+        form = HospitalBranchForm()
+
+    return render(request, 'book_hospital_room.html', {'branches': branches, 'form': form})
+
+
+
+def select_room_view(request, branch_id):
+    hospital_branch = get_object_or_404(Hospital, branch=branch_id)
+
+    if request.method == 'POST':
+        form = HospitalRoomForm(request.POST, initial={'branch': hospital_branch.branch})
+        if form.is_valid():
+            # Book the selected room
+            selected_room = form.cleaned_data['room']
+            selected_room.is_available = False
+            selected_room.patient = request.user
+            selected_room.save()
+            # Redirect to booking success page
+            return redirect('booking_successful', branch_id=hospital_branch.branch, room_id=selected_room.room_no)
+    else:
+        form = HospitalRoomForm(initial={'branch': hospital_branch.branch})
+
+    return render(request, 'select_room.html', {'form': form, 'hospital_branch': hospital_branch})
+
+
+def booking_successful_view(request, branch_id, room_id):
+    hospital_branch = get_object_or_404(Hospital, branch=branch_id)
+    booked_room = get_object_or_404(HospitalRoom, room_no=room_id, branch=hospital_branch)
+
+    # Your view logic here...
+
+    # Add a success message
+    # messages.success(request, f"Room {booked_room.room_no} in {hospital_branch.name} successfully booked!")
+
+    return render(request, 'room_booking_successful.html', {'hospital_branch': hospital_branch, 'booked_room': booked_room})
+
+
 

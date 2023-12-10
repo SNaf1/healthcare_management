@@ -13,5 +13,8 @@ urlpatterns = [
     path('select_time/<int:doctor_id>/<str:date>/', views.select_time_view, name='select_time'),
     path('confirm-payment/<int:doctor_id>/<str:date>/<str:time>/', views.confirm_payment_view, name='confirm_payment'),
     path('appointment-success/', views.appointment_success_view, name='appointment_success'),
+    path('book-hospital-room/', views.book_hospital_room_view, name='book_hospital_room'),
+    path('select-room/<str:branch_id>/', views.select_room_view, name='select_room'),
+    path('booking-successful/<str:branch_id>/<str:room_id>/', views.booking_successful_view, name='booking_successful'),
 ]
 

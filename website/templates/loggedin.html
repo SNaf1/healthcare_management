@@ -2,9 +2,21 @@
 
 {% block content %}
   <h2>Welcome, {{ user.name }}</h2>
+
+  <!-- Display messages -->
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
   <!-- Other content -->
 
   <a href="{% url 'profile' %}">Profile</a>
+  
+  <a href="{% url 'book_hospital_room' %}">Book Hospital Room</a>
 
   <!-- Logout Button -->
   <form method="post" action="{% url 'logout' %}">
