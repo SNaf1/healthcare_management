@@ -21,5 +21,9 @@ urlpatterns = [
     path('med_his_update/', views.update_medical_history, name='update_medical_history'),
     path('edit/', views.edit, name='edit'),
     path('delete/', views.delete_account, name='delete_account'),
+    #walid's path
+    path('review/', views.review_form, name='review_form'),
+    path('review_success/',views.review_success,name= 'review_success'),
+    path('all_hospitals/', views.all_hospitals, name='all_hospitals'),
 ]
 

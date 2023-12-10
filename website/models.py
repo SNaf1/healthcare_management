@@ -1,6 +1,8 @@
 from django.db import models, IntegrityError
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.contrib import messages
+from django.core.validators import MinValueValidator, MaxValueValidator
+
 
 class Hospital(models.Model):
     branch = models.CharField(max_length=100, primary_key=True)
@@ -11,6 +13,14 @@ class Hospital(models.Model):
 
     def address(self):
         return f"{self.road_no}, {self.city}, {self.zip_code}"
+
+    #Walid's code
+    def average_review(self):
+        reviews = self.patienthospitalevaluation_set.all()
+        if reviews.exists():
+            return sum(review.ratings for review in reviews) / reviews.count()
+        else:
+            return 0
 
     def __str__(self):
         return self.branch
@@ -95,6 +105,9 @@ class PatientHospitalEvaluation(models.Model):
     class Meta:
         unique_together = ('patient', 'hospital')
 
+    def __str__(self):
+        return f"{self.patient.username} - {self.hospital.name} - {self.hospital.branch}"
+
 # class PatientDoctorEvaluation(models.Model):
 #     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
 #     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
@@ -164,4 +177,3 @@ class HospitalRoom(models.Model):
     def __str__(self):
         return f"{self.branch} - Room No: {self.room_no} {'(Available)' if self.is_available else '(Booked)'}"
 
-    

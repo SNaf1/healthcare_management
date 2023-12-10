@@ -1,0 +1,17 @@
+<!-- review_form.html -->
+<form method="post" action="">
+    {% csrf_token %}
+    
+    <!-- Render the hospital dropdown list -->
+    {{ form.hospital.label_tag }}
+    {{ form.hospital }}
+    
+    <!-- Render the ratings field with error messages -->
+    {{ form.ratings.label_tag }}
+    {{ form.ratings }}
+    {{ form.ratings.errors }}
+    
+    <!-- Add any other form fields as needed -->
+
+    <button type="submit">Submit</button>
+</form>

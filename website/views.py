@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Doctor, Patient, Appointment, Schedule, Payment, Hospital, HospitalRoom, MedicalHistory, Medicine, Disease
+from .models import Doctor, Patient, Appointment, Schedule, Payment, Hospital, HospitalRoom, MedicalHistory, Medicine, Disease, PatientHospitalEvaluation
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django import forms
 from django.contrib.auth.decorators import login_required
-from .forms import PatientForm, DoctorForm, DateForm, TimeForm, PaymentForm, HospitalBranchForm, HospitalRoomForm, PatientEditForm, MedicalHistoryUpdateForm, DiseaseForm, MedicineForm, MedicineFormSet, DiseaseFormSet
+from .forms import PatientForm, DoctorForm, DateForm, TimeForm, PaymentForm, HospitalBranchForm, HospitalRoomForm
+from .forms import PatientEditForm, MedicalHistoryUpdateForm, DiseaseForm, MedicineForm, MedicineFormSet, DiseaseFormSet, PatientHospitalEvaluationForm
 from django.contrib import messages
 from datetime import date
 
@@ -335,9 +336,32 @@ def booking_successful_view(request, branch_id, room_id):
     hospital_branch = get_object_or_404(Hospital, branch=branch_id)
     booked_room = get_object_or_404(HospitalRoom, room_no=room_id, branch=hospital_branch)
 
-    # Add a success message
-    # messages.success(request, f"Room {booked_room.room_no} in {hospital_branch.name} successfully booked!")
-
     return render(request, 'room_booking_successful.html', {'hospital_branch': hospital_branch, 'booked_room': booked_room})
 
 
+#Walid's code
+@login_required(login_url='login')  
+def review_form(request):
+    if request.method == 'POST':
+        form = PatientHospitalEvaluationForm(request.POST)
+        if form.is_valid():
+            evaluation = form.save(commit=False)
+            evaluation.patient = request.user
+            evaluation.save()
+            return redirect('review_success')
+    else:
+        form = PatientHospitalEvaluationForm()
+
+    hospitals = Hospital.objects.all()
+    return render(request, 'review_form.html', {'form': form, 'hospitals': hospitals})
+
+
+def review_success(request):
+    return render(request,'review_success.html')
+
+def all_hospitals(request):
+    hospitals = Hospital.objects.all()
+    for hospital in hospitals:
+        hospital.avg_review = hospital.average_review()
+
+    return render(request, 'all_hospitals.html', {'hospitals': hospitals})

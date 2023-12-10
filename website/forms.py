@@ -1,7 +1,8 @@
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Patient, Appointment, Payment, Schedule, Doctor, Hospital, HospitalRoom, MedicalHistory, Medicine, Disease
+from .models import Patient, Appointment, Payment, Schedule, Doctor, Hospital, HospitalRoom, MedicalHistory, Medicine, Disease, PatientHospitalEvaluation
 from django.contrib.auth.forms import UserCreationForm
+from django.core.validators import MinValueValidator, MaxValueValidator
 # from datetime import datetime, time
 
 class PatientForm(UserCreationForm):
@@ -179,3 +180,18 @@ class MedicalHistoryUpdateForm(forms.ModelForm):
     class Meta:
         model = MedicalHistory
         exclude = ['patient']  # Add other fields if needed
+
+#walid's code
+class PatientHospitalEvaluationForm(forms.ModelForm):
+    class Meta:
+        model = PatientHospitalEvaluation
+        fields = ['hospital', 'ratings']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['hospital'].queryset = Hospital.objects.all()
+
+    # Add validators to the ratings field
+    ratings = forms.IntegerField(
+        validators=[MinValueValidator(0), MaxValueValidator(5)],
+        help_text="Please enter a rating between 0 and 5.")
