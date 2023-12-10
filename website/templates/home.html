@@ -8,18 +8,15 @@
     <h2 style="color: #4CAF50;">Welcome to Healthcare App</h2>
     <p style="font-size: 18px;">Providing quality healthcare services for a healthier community.</p>
 
-    <!-- Signup Button in the Middle -->
+    <!-- Signup and Login Buttons in the Middle -->
     <div style="margin-top: 30px;">
       <a href="{% url 'signup' %}">
-        <button style="padding: 10px 20px; font-size: 16px; background-color: #4CAF50; color: white; border: none; cursor: pointer; border-radius: 5px;">Sign Up</button>
+        <button style="padding: 10px 20px; font-size: 16px; background-color: #4CAF50; color: white; border: none; cursor: pointer; border-radius: 5px; margin-right: 10px;">Sign Up</button>
+      </a>
+
+      <a href="{% url 'login' %}">
+        <button style="padding: 10px 20px; font-size: 16px; background-color: #3498db; color: white; border: none; cursor: pointer; border-radius: 5px;">Login</button>
       </a>
     </div>
-  </div>
-
-  <!-- Login Button in the Top-Right -->
-  <div style="position: absolute; top: 10px; right: 10px;">
-    <a href="{% url 'login' %}">
-      <button style="padding: 8px 15px; font-size: 14px; background-color: #3498db; color: white; border: none; cursor: pointer; border-radius: 5px;">Login</button>
-    </a>
   </div>
 {% endblock %}

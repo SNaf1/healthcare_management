@@ -8,6 +8,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('loggedin/', views.loggedin_view, name='loggedin'),
     path('profile/', views.profile_view, name='profile'),
+    #Tanzuma
     path('my_appointments/', views.my_appointments_view, name='my_appointments'),
     path('book-appointment/', views.book_appointment_view, name='book_appointment'),
     path('select_date/<int:doctor_id>/', views.select_date_view, name='select_date'),
@@ -18,6 +19,7 @@ urlpatterns = [
     path('book-hospital-room/', views.book_hospital_room_view, name='book_hospital_room'),
     path('select-room/<str:branch_id>/', views.select_room_view, name='select_room'),
     path('booking-successful/<str:branch_id>/<str:room_id>/', views.booking_successful_view, name='booking_successful'),
+    #Ridhwan's path
     path('med_his_update/', views.update_medical_history, name='update_medical_history'),
     path('edit/', views.edit, name='edit'),
     path('delete/', views.delete_account, name='delete_account'),

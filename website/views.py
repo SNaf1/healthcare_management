@@ -15,6 +15,7 @@ def home(request):
         
     return render(request, 'home.html', {})
 
+#Jumanah's code
 def signup_view(request):
     if request.method == 'POST':
         form = PatientForm(request.POST)
@@ -133,7 +134,7 @@ def update_medical_history(request):
 
     return render(request, 'med_his_update.html', context)
 
-
+#Tanzuma's code
 def my_appointments_view(request):
     if request.user.is_authenticated:
         # Filter appointments for the logged-in user
@@ -218,7 +219,6 @@ def select_time_view(request, doctor_id, date):
             return redirect('select_date', doctor_id=doctor_id)
 
         form = TimeForm(doctor=doctor, date=date)
-
 
 
     # Debugging statements

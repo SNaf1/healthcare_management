@@ -1,18 +1,88 @@
-<!-- login.html -->
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #fafafa;
+    }
 
-{% block content %}
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+    .login-container {
+      width: 250px;
+      padding: 20px;
+      border-radius: 5px;
+      background-color: #fff;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
 
+    .login-form h2 {
+      margin-bottom: 15px;
+      font-size: 1.2em;
+      text-align: center;
+      color: #4285f4;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .form-control {
+      width: 80%; /* will be overridden by media query */
+      padding: 8px 10px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      font-size: 0.9em;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4285f4;
+      color: #fff;
+      font-size: 0.9em;
+      cursor: pointer;
+    }
+
+    @media (max-width: 576px) {
+      .form-control {
+        width: 100%; /* adjust width for smaller screens */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
     <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
+      {% csrf_token %}
+      <h2 class="login-form">Login</h2>
+      <div class="form-group">
+        <label class="form-label" for="username">Username</label>
+        <input type="username" class="form-control" id="username" name="username" placeholder="Enter username" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+      </div>
+      <button type="submit" class="btn-primary">Login</button>
     </form>
-{% endblock %}
+  </div>
+</body>
+</html>
