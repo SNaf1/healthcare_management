@@ -1,0 +1,14 @@
+<h2>My Appointments</h2>
+<ul>
+    {% for appointment in appointments %}
+        <li>
+            <strong>Date:</strong> {{ appointment.schedule.date }}
+            <br>
+            <strong>Time:</strong> {{ appointment.schedule.start_time }}
+            <br>
+            <strong>Doctor:</strong> {{ appointment.d_nid.name }}
+            <br>
+            <strong>Status:</strong> {{ appointment.status }}
+        </li>
+    {% endfor %}
+</ul>
