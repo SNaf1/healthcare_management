@@ -12,4 +12,4 @@ urlpatterns = [
     path('review/', views.review_form, name='review_form'),
     path('review_success/',views.review_success,name= 'review_success'),
     path('all_hospitals/', views.all_hospitals, name='all_hospitals'),
-]
+ ]

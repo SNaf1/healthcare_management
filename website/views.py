@@ -8,6 +8,7 @@ from .forms import PatientForm
 from .models import PatientHospitalEvaluation, Hospital
 from .forms import PatientHospitalEvaluationForm
 from django.contrib.auth.decorators import login_required
+
 def home(request):
     return render(request, 'home.html', {})
 
@@ -82,3 +83,4 @@ def all_hospitals(request):
         hospital.avg_review = hospital.average_review()
 
     return render(request, 'all_hospitals.html', {'hospitals': hospitals})
+

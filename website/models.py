@@ -91,8 +91,11 @@ class PatientHospitalEvaluation(models.Model):
 #     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
 #     ratings = models.IntegerField()
 
-#     class Meta:
-#         unique_together = ('patient', 'doctor')
+    # class Meta:
+    #     unique_together = ('patient', 'doctor')
+    
+    # def __str__(self):
+    #     return f"{self.patient.username} - {self.doctor.name} "
 
 
 class Schedule(models.Model):

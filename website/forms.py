@@ -22,5 +22,5 @@ class PatientHospitalEvaluationForm(forms.ModelForm):
     # Add validators to the ratings field
     ratings = forms.IntegerField(
         validators=[MinValueValidator(0), MaxValueValidator(5)],
-        help_text="Please enter a rating between 0 and 5."
-    )
+        help_text="Please enter a rating between 0 and 5.")
+
