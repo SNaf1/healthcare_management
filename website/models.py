@@ -71,6 +71,8 @@ class DocSits(models.Model):
     hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE)
     chamber_no = models.CharField(max_length=20)
 
+    class Meta:
+        unique_together = ('chamber_no', 'hospital')
 
     def save(self, *args, **kwargs):
         # Check if the doctor is already associated with another hospital

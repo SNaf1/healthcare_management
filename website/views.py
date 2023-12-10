@@ -6,7 +6,6 @@ from django import forms
 from django.contrib.auth.decorators import login_required
 from .forms import PatientForm, DoctorForm, DateForm, TimeForm, PaymentForm, HospitalBranchForm, HospitalRoomForm, PatientEditForm, MedicalHistoryUpdateForm, DiseaseForm, MedicineForm, MedicineFormSet, DiseaseFormSet
 from django.contrib import messages
-from formtools.wizard.views import SessionWizardView
 from datetime import date
 
 def home(request):
@@ -132,6 +131,17 @@ def update_medical_history(request):
     }
 
     return render(request, 'med_his_update.html', context)
+
+
+def my_appointments_view(request):
+    if request.user.is_authenticated:
+        # Filter appointments for the logged-in user
+        appointments = Appointment.objects.filter(username=request.user)
+        return render(request, 'my_appointments.html', {'appointments': appointments})
+    else:
+        # Redirect to login page if user not logged in
+        return redirect('login')
+
 
 def book_appointment_view(request):
     if request.method == 'POST':
@@ -321,6 +331,5 @@ def booking_successful_view(request, branch_id, room_id):
     # messages.success(request, f"Room {booked_room.room_no} in {hospital_branch.name} successfully booked!")
 
     return render(request, 'room_booking_successful.html', {'hospital_branch': hospital_branch, 'booked_room': booked_room})
-
 
 
