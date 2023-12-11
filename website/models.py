@@ -185,4 +185,3 @@ class HospitalRoom(models.Model):
 
     def __str__(self):
         return f"{self.branch} - Room No: {self.room_no} {'(Available)' if self.is_available else '(Booked)'}"
-

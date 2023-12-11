@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Welcome, {{ user.name }}{% endblock %}
+
 
 {% block content %}
   <h2>Welcome, {{ user.name }}</h2>
@@ -12,22 +16,24 @@
     </ul>
   {% endif %}
 
-  <!-- Other content -->
+  <!-- Navigation links -->
+  <nav>
+    <ul>
+      <li><a href="{% url 'doctor_review_form' %}">Leave a Review</a></li>
+      
+    </ul>
+  </nav>
 
-  <a href="{% url 'profile' %}">Profile</a>
-  
-  <a href="{% url 'all_hospitals'%}"> Hospitals</a>
+  <!-- Middle content with images acting as buttons -->
+  <div class="button-images-container">
+    <a href="{% url 'book_appointment' %}">
+      <img src="{% static 'images/Book-Doctor-Appointment.jpg' %}" class="img-responsive" alt="Book Doctor Appointment">
+    </a>
+    <a href="{% url 'book_hospital_room' %}">
+      <img src="{% static 'images/Book-Hospital-Room.jpg' %}" class="img-responsive" alt="Book Hospital Room">
+    </a>
+  </div>
 
-  <a href="{% url 'book_hospital_room' %}">Book Hospital Room</a>
+  <!-- Additional content if needed -->
 
-  <a href="{% url 'doctor_review_form'%}"> Leave a Review</a>
-
-  <!-- Logout Button -->
-  <form method="post" action="{% url 'logout' %}">
-    {% csrf_token %}
-    <button type="submit">Logout</button>
-  </form>
-
-  <!-- Link to Book Appointment -->
-  <a href="{% url 'book_appointment' %}">Book Appointment</a>
 {% endblock %}

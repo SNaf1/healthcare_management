@@ -1,20 +1,38 @@
-<h2>My Appointments</h2>
-<ul>
-    {% for appointment in appointments %}
-        <li>
-            <strong>Date:</strong> {{ appointment.schedule.date }}
-            <br>
-            <strong>Time:</strong> {{ appointment.schedule.start_time }}
-            <br>
-            <strong>Doctor:</strong> {{ appointment.d_nid.name }}
-            <br>
-            <strong>Status:</strong> {{ appointment.status }}
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy7raQFJqKCOgFU5KlVQe0BQQiSIF+JmA" crossorigin="anonymous">
+    <title>My Appointments</title>
+</head>
+<body>
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">My Appointments</h2>
+    <ul class="list-group">
+        {% for appointment in appointments %}
+            <li class="list-group-item">
+                <strong>Date:</strong> {{ appointment.schedule.date }}
+                <br>
+                <strong>Time:</strong> {{ appointment.schedule.start_time }}
+                <br>
+                <strong>Doctor:</strong> {{ appointment.d_nid.name }}
+                <br>
+                <strong>Status:</strong> {{ appointment.status }}
 
-            <!-- Form for deleting the appointment -->
-            <form method="post" action="{% url 'delete_appointment' appointment.a_id %}">
-                {% csrf_token %}
-                <button type="submit">Delete Appointment</button>
-            </form>
-        </li>
-    {% endfor %}
-</ul>
+                <!-- Form for deleting the appointment -->
+                <form method="post" action="{% url 'delete_appointment' appointment.a_id %}" class="mt-2">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete Appointment</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+</body>
+</html>
+{% endblock %}

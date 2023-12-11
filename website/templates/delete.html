@@ -1,11 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Delete Account</h2>
-  <p>Are you sure you want to delete your account?</p>
+  <div class="container mt-4">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <h2 class="mb-4 text-center text-danger">Delete Account</h2>
+        <p class="lead text-center">Are you sure you want to delete your account?</p>
 
-  <form method="post" action="{% url 'delete_account' %}">
-    {% csrf_token %}
-    <button type="submit">Delete Account</button>
-  </form>
+        <form method="post" action="{% url 'delete_account' %}" class="text-center">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger btn-lg">Delete Account</button>
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock %}

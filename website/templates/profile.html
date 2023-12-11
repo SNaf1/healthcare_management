@@ -1,45 +1,63 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
-  <a href="{% url 'my_appointments' %}">My Appointments</a>
-  <p>Name: {{ patient.name }}</p>
-  <p>Email: {{ patient.email }}</p>
-  <p>Phone: {{ patient.phone }}</p>
-  <p>Age: {{ patient.age }}</p>
-  <p>Gender: {{ patient.gender }}</p>
 
-  {% if medical_history %}
-    <h3>Medical History</h3>
-    <ul>
-      {% if medical_history.disease_set.all %}
-        <li>
-          <strong>Diseases:</strong>
-          {{ medical_history.disease_set.all|join:', ' }}
-        </li>
-      {% endif %}
-      {% if medical_history.medicine_set.all %}
-        <li>
-          <strong>Medicines:</strong>
-          {{ medical_history.medicine_set.all|join:', ' }}
-        </li>
-      {% endif %}
-    </ul>
-  {% else %}
-    <p>No medical history added. <a href="{% url 'update_medical_history' %}">Update it</a></p>
-  {% endif %}
+<div class="container mt-4">
 
-  <!-- Other content -->
-  <form method="post" action="{% url 'edit' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="Submit" class="btn btn-light">Edit</button>
-  </form>
-  <br>
-  <a href="{% url 'delete_account' %}">
-    <button type="button" class="btn btn-danger">Delete Account</button>
-  </a>
-  <br>
-  <a href="{% url 'update_medical_history' %}">Medical History Update</a>
+  <div class="card border-0 shadow-lg p-4">
+    <div class="patient-info mt-3">
+      <h2 class="text-warning">User Information</h2>
+      <p><strong>Name:</strong> {{ patient.name }}</p>
+      <p><strong>Email:</strong> {{ patient.email }}</p>
+      <p><strong>Phone:</strong> {{ patient.phone }}</p>
+      <p><strong>Age:</strong> {{ patient.age }}</p>
+      <p><strong>Gender:</strong> {{ patient.gender }}</p>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <form method="post" action="{% url 'edit' %}" class="card p-3">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="Submit" class="btn btn-warning">Edit</button>
+        </form>
+      </div>
+      <div class="col-md-6">
+        <a href="{% url 'delete_account' %}" class="btn btn-danger">Delete Account</a>
+      </div>
+    </div>
+    <br><br>
+    {% if medical_history %}
+      <div class="medical-history mt-3">
+        <h3 class="text-warning">Medical History</h3>
+        <ul>
+          {% if medical_history.disease_set.all %}
+            <li>
+              <strong>Diseases:</strong>
+              {{ medical_history.disease_set.all|join:', ' }}
+            </li>
+          {% endif %}
+          {% if medical_history.medicine_set.all %}
+            <li>
+              <strong>Medicines:</strong>
+              {{ medical_history.medicine_set.all|join:', ' }}
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    {% else %}
+      <div class="no-history mt-3">
+        <p>No medical history added. <a href="{% url 'update_medical_history' %}" class="btn btn-warning">Update it</a></p>
+      </div>
+    {% endif %}
+
+    <div class="mt-4">
+      <p class="text-warning">Click the 'update' button below to update your medical history.</p>
+      <a href="{% url 'update_medical_history' %}" class="btn btn-info">Update</a>
+    </div>
+    <br><br>
+  </div>
+
+</div>
 
 {% endblock %}
