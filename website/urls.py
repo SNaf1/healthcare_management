@@ -8,8 +8,6 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('loggedin/', views.loggedin_view, name='loggedin'),
     path('profile/', views.profile_view, name='profile'),
-    #Tanzuma
-    path('my_appointments/', views.my_appointments_view, name='my_appointments'),
     path('book-appointment/', views.book_appointment_view, name='book_appointment'),
     path('select_date/<int:doctor_id>/', views.select_date_view, name='select_date'),
     path('select_time/<int:doctor_id>/<str:date>/', views.select_time_view, name='select_time'),
@@ -19,6 +17,8 @@ urlpatterns = [
     path('book-hospital-room/', views.book_hospital_room_view, name='book_hospital_room'),
     path('select-room/<str:branch_id>/', views.select_room_view, name='select_room'),
     path('booking-successful/<str:branch_id>/<str:room_id>/', views.booking_successful_view, name='booking_successful'),
+    #Tanzuma
+    path('my_appointments/', views.my_appointments_view, name='my_appointments'),
     #Ridhwan's path
     path('med_his_update/', views.update_medical_history, name='update_medical_history'),
     path('edit/', views.edit, name='edit'),
@@ -27,5 +27,7 @@ urlpatterns = [
     path('review/', views.review_form, name='review_form'),
     path('review_success/',views.review_success,name= 'review_success'),
     path('all_hospitals/', views.all_hospitals, name='all_hospitals'),
+    path('doctor_review/', views.doctor_review_form, name='doctor_review_form'),
+    path('doctor_review_success/', views.doctor_review_success, name='doctor_review_success'),
 ]
 

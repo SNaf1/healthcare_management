@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Patient, Appointment, Payment, Schedule, Doctor, Hospital, HospitalRoom, MedicalHistory, Medicine, Disease, PatientHospitalEvaluation
+from .models import Patient, Appointment, Payment, Schedule, Doctor, Hospital, HospitalRoom, MedicalHistory, Medicine, Disease, PatientHospitalEvaluation, PatientDoctorEvaluation
 from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import MinValueValidator, MaxValueValidator
 # from datetime import datetime, time
@@ -192,6 +192,20 @@ class PatientHospitalEvaluationForm(forms.ModelForm):
         self.fields['hospital'].queryset = Hospital.objects.all()
 
     # Add validators to the ratings field
+    ratings = forms.IntegerField(
+        validators=[MinValueValidator(0), MaxValueValidator(5)],
+        help_text="Please enter a rating between 0 and 5.")
+
+class PatientDoctorEvaluationForm(forms.ModelForm):
+    class Meta:
+        model = PatientDoctorEvaluation
+        fields = ['doctor','ratings']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['doctor'].queryset = Doctor.objects.all()
+
+     # Add validators to the ratings field
     ratings = forms.IntegerField(
         validators=[MinValueValidator(0), MaxValueValidator(5)],
         help_text="Please enter a rating between 0 and 5.")

@@ -11,7 +11,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      height: 80vh;
     }
 
     .signup-form {
@@ -23,11 +23,25 @@
       max-width: 400px;
     }
 
+    .signup-form h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
     .signup-form label {
       font-weight: bold;
+      margin-bottom: 5px;
     }
 
     .signup-form input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .signup-form select {
       width: 100%;
       padding: 10px;
       margin-bottom: 15px;
@@ -54,10 +68,33 @@
 {% block content %}
   <div class="container signup-container">
     <div class="col-md-6 signup-form">
-      <h2 class="text-center mb-4">Sign Up</h2>
+      <h2>Sign Up</h2>
       <form method="post" action="{% url 'signup' %}">
         {% csrf_token %}
-        {{ signup_form.as_p }}
+        <div class="form-group">
+          {{ signup_form.username.label_tag }}
+          {{ signup_form.username }}
+        </div>
+        <div class="form-group">
+          {{ signup_form.email.label_tag }}
+          {{ signup_form.email }}
+        </div>
+        <div class="form-group">
+          {{ signup_form.age.label_tag }}
+          {{ signup_form.age }}
+        </div>
+        <div class="form-group">
+          {{ signup_form.gender.label_tag }}
+          {{ signup_form.gender }}
+        </div>
+        <div class="form-group">
+          {{ signup_form.password1.label_tag }}
+          {{ signup_form.password1 }}
+        </div>
+        <div class="form-group">
+          {{ signup_form.password2.label_tag }}
+          {{ signup_form.password2 }}
+        </div>
         <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
       </form>
     </div>

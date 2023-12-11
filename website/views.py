@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Doctor, Patient, Appointment, Schedule, Payment, Hospital, HospitalRoom, MedicalHistory, Medicine, Disease, PatientHospitalEvaluation
+from .models import Doctor, Patient, Appointment, Schedule, Payment, Hospital, HospitalRoom, MedicalHistory, Medicine, Disease, PatientHospitalEvaluation, PatientDoctorEvaluation
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django import forms
 from django.contrib.auth.decorators import login_required
-from .forms import PatientForm, DoctorForm, DateForm, TimeForm, PaymentForm, HospitalBranchForm, HospitalRoomForm
+from .forms import PatientForm, DoctorForm, DateForm, TimeForm, PaymentForm, HospitalBranchForm, HospitalRoomForm, PatientDoctorEvaluationForm
 from .forms import PatientEditForm, MedicalHistoryUpdateForm, DiseaseForm, MedicineForm, MedicineFormSet, DiseaseFormSet, PatientHospitalEvaluationForm
 from django.contrib import messages
 from datetime import date
@@ -365,3 +365,20 @@ def all_hospitals(request):
         hospital.avg_review = hospital.average_review()
 
     return render(request, 'all_hospitals.html', {'hospitals': hospitals})
+
+def doctor_review_form(request):
+
+    if request.method == 'POST':
+        form = PatientDoctorEvaluationForm(request.POST)
+        if form.is_valid():
+            evaluation = form.save(commit=False)
+            evaluation.patient = request.user  # Assuming you have a user profile model
+            evaluation.save()
+            return redirect('doctor_review_success')  # Redirect to a success page
+    else:
+        form = PatientDoctorEvaluationForm()
+    doctor = Doctor.objects.all
+    return render(request, 'doctor_review_form.html', {'form': form, 'doctor': doctor})
+
+def doctor_review_success(request):
+    return render(request, 'doctor_review_success.html')

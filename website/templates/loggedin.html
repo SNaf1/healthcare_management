@@ -20,6 +20,8 @@
 
   <a href="{% url 'book_hospital_room' %}">Book Hospital Room</a>
 
+  <a href="{% url 'doctor_review_form'%}"> Leave a Review</a>
+
   <!-- Logout Button -->
   <form method="post" action="{% url 'logout' %}">
     {% csrf_token %}
