@@ -1,26 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Update Medical History</h2>
+  <!-- <div class="container mt-2"> -->
+    <div class="card border-0 shadow-sm">
+      <div class="card-body">
+        <h2 class="mb-4 text-center text-danger">Update Medical History!</h2>
 
-  <form method="post" action="{% url 'update_medical_history' %}">
-    {% csrf_token %}
-    {{ main_form.as_p }}
+        <form method="post" action="{% url 'update_medical_history' %}" >
+          {% csrf_token %}
+          {{ main_form.as_p }}
 
-    <h3>Diseases</h3>
-    {{ formset_disease.management_form }}
-    {{ formset_disease.non_form_errors }}
-    {% for form in formset_disease.forms %}
-      {{ form.as_table }}
-    {% endfor %}
+          <div class="mt-4">
+            <h3 class="text-danger">Diseases</h3>
+            {{ formset_disease.management_form }}
+            {{ formset_disease.non_form_errors }}
+            {% for form in formset_disease.forms %}
+              {{ form.as_table }}
+            {% endfor %}
+          </div>
 
-    <h3>Medicines</h3>
-    {{ formset_medicine.management_form }}
-    {{ formset_medicine.non_form_errors }}
-    {% for form in formset_medicine.forms %}
-      {{ form.as_table }}
-    {% endfor %}
+          <div class="mt-4">
+            <h3 class="text-danger">Medicines</h3>
+            {{ formset_medicine.management_form }}
+            {{ formset_medicine.non_form_errors }}
+            {% for form in formset_medicine.forms %}
+              {{ form.as_table }}
+            {% endfor %}
+          </div>
 
-    <button type="submit">Save</button>
-  </form>
+          <button type="submit" class="btn btn-danger btn-lg mt-4">Save</button>
+        </form>
+      </div>
+    </div>
+  <!-- </div> -->
 {% endblock %}
