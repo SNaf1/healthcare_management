@@ -76,54 +76,15 @@ class TimeForm(forms.Form):
             available_times = Schedule.objects.filter(doctor=doctor, date=date).exclude(
                 appointment__isnull=False, appointment__status='Confirmed'
             ).values_list('start_time', flat=True)
-            print(available_times)
             time_choices = [(str(time), time.strftime('%I:%M %p')) for time in available_times]
             self.fields['time'].choices = time_choices
             print(self.fields['time'].choices)
 
         
 
-    # def clean_time(self):
-    #     time = self.cleaned_data.get('time')
-    #     date = self.cleaned_data.get('date')
-    #     doctor = self.cleaned_data.get('doctor')
-
-    #     print(time, date, doctor)
-    #     # Debugging statements
-    #     print("Type of selected time:", type(time))
-    #     print("Selected time:", time)
-
-    #     available_times = Schedule.objects.filter(doctor=doctor, date=date).values_list('start_time', flat=True)
-
-    #     # Debugging statements
-    #     print("Type of available times:", type(available_times))
-    #     print("Available times:", available_times)
-
-    #     if time not in available_times:
-    #         raise forms.ValidationError("This time is not available for the selected doctor and date.")
-
-    #     return time
 
 class PaymentForm(forms.Form):
     method = forms.CharField(max_length=50, label='Transaction ID')
-
-# class HospitalRoomBookingForm(forms.Form):
-#     branch = forms.ModelChoiceField(queryset=Hospital.objects.all(), label='Select Branch', empty_label=None)
-
-#     def __init__(self, *args, **kwargs):
-#         super(HospitalRoomBookingForm, self).__init__(*args, **kwargs)
-#         selected_branch = self.fields['branch'].initial
-#         if selected_branch:
-#             available_rooms = HospitalRoom.objects.filter(branch=selected_branch, is_available=True)
-#             self.fields['room'] = forms.ModelChoiceField(queryset=available_rooms, label='Select Room')
-
-#     def clean_branch(self):
-#         branch = self.cleaned_data['branch']
-#         # Update the form with available rooms based on the selected branch
-#         available_rooms = HospitalRoom.objects.filter(branch=branch, is_available=True)
-#         self.fields['room'] = forms.ModelChoiceField(queryset=available_rooms, label='Select Room')
-#         return branch
-
 
 class HospitalBranchForm(forms.Form):
     branch = forms.ModelChoiceField(queryset=Hospital.objects.all(), to_field_name='pk', label='Select Hospital Branch')

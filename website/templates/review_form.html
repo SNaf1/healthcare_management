@@ -1,17 +1,80 @@
-<!-- review_form.html -->
-<form method="post" action="">
-    {% csrf_token %}
-    
-    <!-- Render the hospital dropdown list -->
-    {{ form.hospital.label_tag }}
-    {{ form.hospital }}
-    
-    <!-- Render the ratings field with error messages -->
-    {{ form.ratings.label_tag }}
-    {{ form.ratings }}
-    {{ form.ratings.errors }}
-    
-    <!-- Add any other form fields as needed -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Form</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
 
-    <button type="submit">Submit</button>
-</form>
+        form {
+            max-width: 400px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <form method="post" action="">
+        {% csrf_token %}
+
+        <!-- Render the hospital dropdown list -->
+        <label for="{{ form.hospital.id_for_label }}">Hospital</label>
+        {{ form.hospital }}
+        
+        <!-- Render the ratings field with error messages -->
+        <label for="{{ form.ratings.id_for_label }}">Ratings</label>
+        {{ form.ratings }}
+        {{ form.ratings.errors }}
+        
+        <!-- Add any other form fields as needed -->
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        // You can add JavaScript code here for additional interactivity if needed
+    </script>
+</body>
+</html>

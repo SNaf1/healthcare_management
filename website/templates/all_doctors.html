@@ -81,15 +81,15 @@
     </header>
 
     <nav>
-        <a href="{% url 'review_form' %}">Leave a Review</a>
+        <a href="{% url 'doctor_review_form' %}">Leave a Review</a>
     </nav>
 
     <section>
         <ul>
-            {% for hospital in hospitals %}
+            {% for doctor in doctors %}
                 <li>
-                    <strong>{{ hospital.name }}</strong> - {{ hospital.branch }}
-                    <span>(Average Review: {{ hospital.avg_review|default:0 }}/5)</span>
+                    <strong>{{ doctor.name }}</strong> 
+                    <span>(Average Review: {{ doctor.avg_review|default:0 }}/5)</span>
                 </li>
             {% endfor %}
         </ul>

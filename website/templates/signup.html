@@ -1,102 +1,43 @@
 {% extends 'base.html' %}
 
-{% block title %}Sign Up - Healthcare App{% endblock %}
+{% block title %}Sign Up{% endblock %}
 
 {% block styles %}
-  {{ block.super }}
-  <style>
-    /* Add any additional styles here */
+{{ block.super }}
+<style>
+  /* Add any additional styles here */
 
-    .signup-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 80vh;
-    }
+  .btn-primary {
+    background-color: #46b56b;
+    color: #fff;
+    border: none;
+  }
 
-    .signup-form {
-      background-color: #f5f5f5;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-      width: 80%;
-      max-width: 400px;
-    }
-
-    .signup-form h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .signup-form label {
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    .signup-form input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    .signup-form select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    .signup-form button {
-      background-color: #009688 !important; /* Use !important to override Bootstrap styles */
-      color: #fff;
-      border: none;
-      padding: 15px;
-      font-size: 16px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .signup-form button:hover {
-      background-color: #00796b !important; /* Use !important to override Bootstrap styles */
-    }
-  </style>
+  .btn-primary:hover {
+    background-color: #00796b;
+  }
+</style>
 {% endblock %}
 
 {% block content %}
-  <div class="container signup-container">
-    <div class="col-md-6 signup-form">
-      <h2>Sign Up</h2>
-      <form method="post" action="{% url 'signup' %}">
-        {% csrf_token %}
-        <div class="form-group">
-          {{ signup_form.username.label_tag }}
-          {{ signup_form.username }}
-        </div>
-        <div class="form-group">
-          {{ signup_form.email.label_tag }}
-          {{ signup_form.email }}
-        </div>
-        <div class="form-group">
-          {{ signup_form.age.label_tag }}
-          {{ signup_form.age }}
-        </div>
-        <div class="form-group">
-          {{ signup_form.gender.label_tag }}
-          {{ signup_form.gender }}
-        </div>
-        <div class="form-group">
-          {{ signup_form.password1.label_tag }}
-          {{ signup_form.password1 }}
-        </div>
-        <div class="form-group">
-          {{ signup_form.password2.label_tag }}
-          {{ signup_form.password2 }}
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
-      </form>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 signup-form">
+        <h2>Sign Up</h2>
+        {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        <form method="post" action="{% url 'signup' %}">
+          {% csrf_token %}
+          {{ signup_form.as_p }}
+          <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+      </div>
     </div>
   </div>
 {% endblock %}

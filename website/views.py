@@ -382,3 +382,8 @@ def doctor_review_form(request):
 
 def doctor_review_success(request):
     return render(request, 'doctor_review_success.html')
+
+
+def all_doctors(request):
+    doctors = Doctor.objects.all()
+    return render(request, 'all_doctors.html', {'doctors': doctors})

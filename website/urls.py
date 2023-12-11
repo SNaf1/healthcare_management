@@ -29,5 +29,6 @@ urlpatterns = [
     path('all_hospitals/', views.all_hospitals, name='all_hospitals'),
     path('doctor_review/', views.doctor_review_form, name='doctor_review_form'),
     path('doctor_review_success/', views.doctor_review_success, name='doctor_review_success'),
+    path('all_doctors/', views.all_doctors, name='all_doctors'),
 ]
 

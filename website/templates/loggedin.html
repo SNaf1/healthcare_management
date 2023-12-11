@@ -6,6 +6,30 @@
 
 {% block content %}
   <h2>Welcome, {{ user.name }}</h2>
+  <section class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon icon-bar"></span>
+                <span class="icon icon-bar"></span>
+                <span class="icon icon-bar"></span>
+            </button>
+        </div>
+        <!-- MENU LINKS -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'profile' %}">Profile</a></li>
+                <li><a href="{% url 'my_appointments' %}">My Appointments</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+                <li><a href="{% url 'all_hospitals' %}">All Hospital Branches</a></li>
+                <li><a href="{% url 'all_doctors' %}">All Doctors</a></li>
+                
+                <!-- <li><a href="{% url 'logout' %}">Logout</a></li> -->
+                <!-- Add your other menu items here -->
+            </ul>
+        </div>
+    </div>
+</section>
 
   <!-- Display messages -->
   {% if messages %}
@@ -16,14 +40,7 @@
     </ul>
   {% endif %}
 
-  <!-- Navigation links -->
-  <nav>
-    <ul>
-      <li><a href="{% url 'doctor_review_form' %}">Leave a Review</a></li>
-      
-    </ul>
-  </nav>
-
+ 
   <!-- Middle content with images acting as buttons -->
   <div class="button-images-container">
     <a href="{% url 'book_appointment' %}">
