@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 
+
+{% comment %} {% extends 'base.html' %}
+
 {% block content %}
   <p>Name: {{ patient.name }}</p>
   <p>Email: {{ patient.email }}</p>
@@ -9,4 +12,38 @@
 
   <!-- Other content -->
 
+{% endblock %} {% endcomment %}
+
+
+{% block content %}
+  <div class="patient-info-container">
+    <h2 class="patient-info-title">Patient Information</h2>
+    <ul class="patient-info-list">
+      <li><span class="info-label">Name:</span> {{ patient.name }}</li>
+      <li><span class="info-label">Email:</span> {{ patient.email }}</li>
+      <li><span class="info-label">Phone:</span> {{ patient.phone }}</li>
+      <li><span class="info-label">Age:</span> {{ patient.age }}</li>
+      <li><span class="info-label">Gender:</span> {{ patient.gender }}</li>
+    </ul>
+  </div>
+
+  <!-- Other content -->
+
+  <script>
+    // Add JavaScript code for interactivity
+    document.addEventListener('DOMContentLoaded', function () {
+      // Example: Add a hover effect on the patient information
+      const patientInfoItems = document.querySelectorAll('.patient-info-list li');
+
+      patientInfoItems.forEach(item => {
+        item.addEventListener('mouseover', () => {
+          item.style.backgroundColor = '#f0f0f0';
+        });
+
+        item.addEventListener('mouseout', () => {
+          item.style.backgroundColor = 'transparent';
+        });
+      });
+    });
+  </script>
 {% endblock %}

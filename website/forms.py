@@ -4,6 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import PatientHospitalEvaluation
 from .models import Hospital
 from django.core.validators import MinValueValidator, MaxValueValidator
+from .models import PatientDoctorEvaluation, Doctor
+
 
 class PatientForm(UserCreationForm):
     class Meta:
@@ -24,3 +26,17 @@ class PatientHospitalEvaluationForm(forms.ModelForm):
         validators=[MinValueValidator(0), MaxValueValidator(5)],
         help_text="Please enter a rating between 0 and 5.")
 
+
+class PatientDoctorEvaluationForm(forms.ModelForm):
+    class Meta:
+        model = PatientDoctorEvaluation
+        fields = ['doctor','ratings']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['doctor'].queryset = Doctor.objects.all()
+
+     # Add validators to the ratings field
+    ratings = forms.IntegerField(
+        validators=[MinValueValidator(0), MaxValueValidator(5)],
+        help_text="Please enter a rating between 0 and 5.")

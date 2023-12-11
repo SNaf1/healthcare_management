@@ -64,6 +64,13 @@ class Doctor(models.Model):
     name = models.CharField(max_length=40)
     hospitals = models.ManyToManyField(Hospital, through='DocSits', through_fields=('doctor', 'hospital'))
 
+    def average_review(self):
+        reviews = self.patiendoctorevaluation_set.all()
+        if reviews.exists():
+            return sum(review.ratings for review in reviews) / reviews.count()
+        else:
+            return 0
+
     def __str__(self):
         return self.name
 
@@ -85,17 +92,6 @@ class PatientHospitalEvaluation(models.Model):
 
     def __str__(self):
         return f"{self.patient.username} - {self.hospital.name} - {self.hospital.branch}"
-
-# class PatientDoctorEvaluation(models.Model):
-#     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-#     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-#     ratings = models.IntegerField()
-
-    # class Meta:
-    #     unique_together = ('patient', 'doctor')
-    
-    # def __str__(self):
-    #     return f"{self.patient.username} - {self.doctor.name} "
 
 
 class Schedule(models.Model):
@@ -148,6 +144,18 @@ class HospitalRoom(models.Model):
     def __str__(self):
         return f"{self.branch} - Room No: {self.room_no}"
 
+
+
+class PatientDoctorEvaluation(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    ratings = models.IntegerField()
+
+    class Meta:
+        unique_together = ('patient', 'doctor')
+    
+    def __str__(self):
+        return f"{self.patient.username} - {self.doctor.name} "
 
     # groups = models.ManyToManyField(
     #     Group,

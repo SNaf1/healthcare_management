@@ -1,22 +1,186 @@
-<!-- all_hospitals.html -->
 
-<a href="{% url 'review_form' %}">Leave a Review</a>
-
-<!DOCTYPE html>
-<html>
+{% comment %} <!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Hospitals</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            border: 1px solid #333;
+            padding: 8px 16px;
+            border-radius: 4px;
+            background-color: #fff;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        a:hover {
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
-    <h1>All Hospitals</h1>
-    <ul>
-        {% for hospital in hospitals %}
-            <li>
-                {{ hospital.name }} - {{ hospital.branch }}
-                (Average Review: {{ hospital.avg_review|default:0 }}/5)
-            </li>
-        {% endfor %}
-    </ul>
+    <header>
+        <h1>All Hospitals</h1>
+    </header>
+
+    <nav>
+        <a href="{% url 'review_form' %}">Leave a Review</a>
+    </nav>
+
+    <section>
+        <ul>
+            {% for hospital in hospitals %}
+                <li>
+                    <strong>{{ hospital.name }}</strong> - {{ hospital.branch }}<br>
+                    <span>(Average Review: {{ hospital.avg_review|default:0 }}/5)</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
 </body>
-</html>
+</html>  {% endcomment %}
+
+<!-- all_hospitals.html --> 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Hospitals</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            transition: background-color 0.3s ease;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em;
+        }
+
+        h1 {
+            color: #333;
+            margin: 0;
+        }
+
+        nav {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            border: 1px solid #333;
+            padding: 8px 16px;
+            border-radius: 4px;
+            background-color: #fff;
+            transition: background-color 0.3s, color 0.3s;
+            cursor: pointer;
+        }
+
+        a:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        li:hover {
+            transform: scale(1.05);
+        }
+
+        span {
+            display: block;
+            margin-top: 8px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>All Hospitals</h1>
+    </header>
+
+    <nav>
+        <a href="{% url 'review_form' %}">Leave a Review</a>
+    </nav>
+
+    <section>
+        <ul>
+            {% for hospital in hospitals %}
+                <li>
+                    <strong>{{ hospital.name }}</strong> - {{ hospital.branch }}
+                    <span>(Average Review: {{ hospital.avg_review|default:0 }}/5)</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <script>
+        // You can add JavaScript code here for additional interactivity if needed
+        document.addEventListener('DOMContentLoaded', function () {
+            // Add any dynamic behavior or interactivity here
+        });
+    </script>
+</body>
 </html>

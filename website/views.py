@@ -8,6 +8,9 @@ from .forms import PatientForm
 from .models import PatientHospitalEvaluation, Hospital
 from .forms import PatientHospitalEvaluationForm
 from django.contrib.auth.decorators import login_required
+from .models import Doctor, PatientDoctorEvaluation
+from .forms import PatientDoctorEvaluationForm
+
 
 def home(request):
     return render(request, 'home.html', {})
@@ -83,4 +86,21 @@ def all_hospitals(request):
         hospital.avg_review = hospital.average_review()
 
     return render(request, 'all_hospitals.html', {'hospitals': hospitals})
+
+def doctor_review_form(request):
+
+    if request.method == 'POST':
+        form = PatientDoctorEvaluationForm(request.POST)
+        if form.is_valid():
+            evaluation = form.save(commit=False)
+            evaluation.patient = request.user  # Assuming you have a user profile model
+            evaluation.save()
+            return redirect('doctor_review_success')  # Redirect to a success page
+    else:
+        form = PatientDoctorEvaluationForm()
+    doctor = Doctor.objects.all
+    return render(request, 'doctor_review_form.html', {'form': form, 'doctor': doctor})
+
+def doctor_review_success(request):
+    return render(request, 'doctor_review_success.html')
 

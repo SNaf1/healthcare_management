@@ -1,0 +1,65 @@
+
+<!-- Include Bootstrap CSS and JS in the head section of your HTML document -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- doctor_review_form.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Review Form</title>
+    <!-- Additional CSS styles for custom styling -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <form method="post" action="#" id="reviewForm">
+        {% csrf_token %}
+        <!-- Bootstrap form styling -->
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        <!-- End Bootstrap form styling -->
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <!-- Optional: Add custom JavaScript for additional functionality -->
+    <script>
+        // Add your custom JavaScript here
+        // For example, you can use JavaScript to handle form submission asynchronously
+        document.getElementById("reviewForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            // Your custom JavaScript logic for form submission
+            // You can use fetch or other methods to send data asynchronously
+        });
+    </script>
+
+</body>
+</html>
