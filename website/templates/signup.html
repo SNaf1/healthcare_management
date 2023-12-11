@@ -1,14 +1,65 @@
-<!-- signup.html -->
 {% extends 'base.html' %}
 
 {% block title %}Sign Up - Healthcare App{% endblock %}
 
-{% block content %}
-  <h2>Sign Up</h2>
-  <form method="post" action="{% url 'signup' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign Up</button>
-  </form>
+{% block styles %}
+  {{ block.super }}
+  <style>
+    /* Add any additional styles here */
+
+    .signup-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .signup-form {
+      background-color: #f5f5f5;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      width: 80%;
+      max-width: 400px;
+    }
+
+    .signup-form label {
+      font-weight: bold;
+    }
+
+    .signup-form input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .signup-form button {
+      background-color: #009688 !important; /* Use !important to override Bootstrap styles */
+      color: #fff;
+      border: none;
+      padding: 15px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .signup-form button:hover {
+      background-color: #00796b !important; /* Use !important to override Bootstrap styles */
+    }
+  </style>
 {% endblock %}
 
+{% block content %}
+  <div class="container signup-container">
+    <div class="col-md-6 signup-form">
+      <h2 class="text-center mb-4">Sign Up</h2>
+      <form method="post" action="{% url 'signup' %}">
+        {% csrf_token %}
+        {{ signup_form.as_p }}
+        <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

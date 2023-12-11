@@ -26,7 +26,7 @@ def signup_view(request):
     else:
         form = PatientForm()
 
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'signup.html', {'signup_form': form})
 
 
 def login_view(request):
@@ -45,14 +45,14 @@ def login_view(request):
     else:
         form = AuthenticationForm()
 
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'login.html', {'login_form': form})
 
 @login_required(login_url='login')
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('home')
 
-
+@login_required(login_url='login')
 def loggedin_view(request):
     return render(request, 'loggedin.html')
 

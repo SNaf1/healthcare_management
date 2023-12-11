@@ -1,84 +1,133 @@
-<!-- base.html -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Healthcare App{% endblock %}</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
 
-        header {
-            background-color: #3498db;
-            color: white;
-            padding: 15px;
-            text-align: center;
-        }
+     <title>{% block title %}{% endblock %}</title>
+     <!-- Add your meta tags and other head elements here -->
 
-        nav {
-            background-color: #333;
-            overflow: hidden;
-        }
+     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+     <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+     <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
 
-        nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
+     <!-- MAIN CSS -->
+     <link rel="stylesheet" href="{% static 'css/tooplate-style.css' %}">
 
-        nav li {
-            float: left;
-        }
+     <style>
+       body {
+         display: flex;
+         flex-direction: column;
+         min-height: 100vh;
+         margin: 0;
+       }
 
-        nav a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
+       /* Set a flex-grow property for the content to fill available space */
+       main {
+         flex-grow: 1;
+       }
 
-        main {
-            padding: 20px;
-        }
+       /* Style the footer as desired */
+       footer {
+         background-color: rgb(28, 27, 27);
+         color: #ffffff;
+         padding: 20px 0;
+       }
+     </style>
+    
 
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
 </head>
-<body>
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
 
-<header>
-    <h1>Healthcare App</h1>
-    <nav>
-        <ul>
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <!-- Add more navigation links as needed -->
-        </ul>
-    </nav>
-</header>
+     <!-- PRE LOADER -->
+     <section class="preloader">
+          <div class="spinner">
+               <span class="spinner-rotate"></span>
+          </div>
+     </section>
 
-<main>
-    {% block content %}{% endblock %}
-</main>
+     <!-- HEADER -->
+     <header>
+          <div class="container">
+               <div class="row">
+                    <div class="col-md-4 col-sm-5">
+                         <p>Welcome to a Professional Health Care</p>
+                    </div>
+                    <div class="col-md-8 col-sm-7 text-align-right">
+                         <!-- Your header content here -->
+                    </div>
+               </div>
+          </div>
+     </header>
 
-<footer>
-    <!-- Add footer content and links here -->
-    <p>&copy; 2023 Healthcare App. All rights reserved.</p>
-</footer>
+     <!-- MENU -->
+     <section class="navbar navbar-default navbar-static-top" role="navigation">
+          <div class="container">
+               <div class="navbar-header">
+                    <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                         <span class="icon icon-bar"></span>
+                    </button>
+                    <!-- lOGO TEXT HERE -->
+                    <a href="/" class="navbar-brand"><i class="fa fa-h-square"></i>Health Center</a>
+               </div>
+               <!-- MENU LINKS -->
+               <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                         <li><a href="/" class="smoothScroll">Home</a></li>
+                         <!-- Add your other menu items here -->
+                    </ul>
+               </div>
+          </div>
+     </section>
+
+     <!-- CONTENT -->
+     <main>
+       {% block content %}{% endblock %}
+     </main>
+
+     <!-- FOOTER -->
+     <footer data-stellar-background-ratio="5">
+        <div class="container">
+             <div class="row">
+                  <div class="col-md-12 col-sm-12 border-top">
+                       <div class="col-md-4 col-sm-6">
+                            <div class="copyright-text"> 
+                                 <p>Copyright &copy; 2017 Your Company 
+                                 
+                                 | Design: <a href="http://www.tooplate.com" target="_parent">Tooplate</a></p>
+                            </div>
+                       </div>
+                       <div class="col-md-6 col-sm-6">
+                            <div class="footer-link"> 
+                                 <a href="#">Laboratory Tests</a>
+                                 <a href="#">Departments</a>
+                                 <a href="#">Insurance Policy</a>
+                                 <a href="#">Careers</a>
+                            </div>
+                       </div>
+                       <div class="col-md-2 col-sm-2 text-align-center">
+                            <div class="angle-up-btn"> 
+                                <a href="#top" class="smoothScroll wow fadeInUp" data-wow-delay="1.2s"><i class="fa fa-angle-up"></i></a>
+                            </div>
+                       </div>   
+                  </div>
+                  
+             </div>
+        </div>
+   </footer>
+
+     <!-- SCRIPTS -->
+     <script src="{% static 'js/jquery.js' %}"></script>
+     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+     <script src="{% static 'js/jquery.sticky.js' %}"></script>
+     <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+     <script src="{% static 'js/wow.min.js' %}"></script>
+     <script src="{% static 'js/smoothscroll.js' %}"></script>
+     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+     <script src="{% static 'js/custom.js' %}"></script>
 
 </body>
 </html>

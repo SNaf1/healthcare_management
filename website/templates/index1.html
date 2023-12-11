@@ -1,0 +1,22 @@
+<!-- home.html -->
+{% extends 'base.html' %}
+
+{% block title %}Home - Healthcare App{% endblock %}
+
+{% block content %}
+  <div style="text-align: center; padding: 50px;">
+    <h2 style="color: #4CAF50;">Welcome to Healthcare App</h2>
+    <p style="font-size: 18px;">Providing quality healthcare services for a healthier community.</p>
+
+    <!-- Signup and Login Buttons in the Middle -->
+    <div style="margin-top: 30px;">
+      <a href="{% url 'signup' %}">
+        <button style="padding: 10px 20px; font-size: 16px; background-color: #4CAF50; color: white; border: none; cursor: pointer; border-radius: 5px; margin-right: 10px;">Sign Up</button>
+      </a>
+
+      <a href="{% url 'login' %}">
+        <button style="padding: 10px 20px; font-size: 16px; background-color: #3498db; color: white; border: none; cursor: pointer; border-radius: 5px;">Login</button>
+      </a>
+    </div>
+  </div>
+{% endblock %}

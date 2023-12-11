@@ -1,88 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background-color: #fafafa;
-    }
+{% extends 'base.html' %}
 
-    .login-container {
-      width: 250px;
-      padding: 20px;
-      border-radius: 5px;
-      background-color: #fff;
-      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    }
+{% block title %}Login{% endblock %}
 
-    .login-form h2 {
-      margin-bottom: 15px;
-      font-size: 1.2em;
-      text-align: center;
-      color: #4285f4;
-    }
+{% block styles %}
+{{ block.super }}
+<style>
+  /* Add any additional styles here */
 
-    .form-group {
-      margin-bottom: 10px;
-    }
+  .btn-primary {
+    background-color: #08ef55;
+    color: #fff;
+    border: none;
+  }
 
-    .form-label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-      color: #333;
-    }
+  .btn-primary:hover {
+    background-color: #00796b;
+  }
+</style>
+{% endblock %}
 
-    .form-control {
-      width: 75%; /* will be overridden by media query */
-      padding: 8px 10px;
-      border: 1px solid #ddd;
-      border-radius: 3px;
-      font-size: 0.9em;
-    }
+{% block content %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 login-form">
+        <h2>Login</h2>
+        {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
 
-    .btn-primary {
-      width: 100%;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 5px;
-      background-color: #4285f4;
-      color: #fff;
-      font-size: 0.9em;
-      cursor: pointer;
-    }
-
-    @media (max-width: 576px) {
-      .form-control {
-        width: 100%; /* adjust width for smaller screens */
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="login-container">
-    <form method="post" action="{% url 'login' %}">
-      {% csrf_token %}
-      <h2 class="login-form">Login</h2>
-      <div class="form-group">
-        <label class="form-label" for="username">Username</label>
-        <input type="username" class="form-control" id="username" name="username" placeholder="Enter username" required>
+        <form method="post" action="{% url 'login' %}">
+          {% csrf_token %}
+          {{ login_form.as_p }}
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
       </div>
-      <div class="form-group">
-        <label class="form-label" for="password">Password</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
-      </div>
-      <button type="submit" class="btn-primary">Login</button>
-    </form>
+    </div>
   </div>
-</body>
-</html>
+{% endblock %}
