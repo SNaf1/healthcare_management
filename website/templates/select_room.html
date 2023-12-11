@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <form method="post" action="{% url 'select_room' branch_id=hospital_branch.branch %}">
     {% csrf_token %}
     <h2>Select Room</h2>
@@ -14,3 +16,4 @@
 
     <button type="submit">Book Room</button>
 </form>
+{% endblock %}

@@ -35,9 +35,6 @@ class Patient(AbstractUser):
     # evaluated_doctors = models.ManyToManyField(Doctor, through='PatientDoctorEvaluation', related_name='evaluated_by_patients')
     evaluated_hospitals = models.ManyToManyField(Hospital, through='PatientHospitalEvaluation', related_name='evaluated_by_patients')
 
-    # USERNAME_FIELD = 'email'
-    # REQUIRED_FIELDS = ['username', 'phone', 'name']
-
     def __str__(self):
         return self.username
 
@@ -70,7 +67,7 @@ class Doctor(models.Model):
     hospitals = models.ManyToManyField(Hospital, through='DocSits', through_fields=('doctor', 'hospital'))
 
     def average_review(self):
-        reviews = self.patiendoctorevaluation_set.all()
+        reviews = self.patientdoctorevaluation_set.all()
         if reviews.exists():
             return sum(review.ratings for review in reviews) / reviews.count()
         else:

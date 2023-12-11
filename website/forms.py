@@ -30,7 +30,6 @@ class DoctorForm(forms.Form):
         return label
 
 
-
 class DateForm(forms.Form):
     date = forms.ChoiceField(choices=(), widget=forms.RadioSelect, label='')
     doctor = forms.CharField(widget=forms.HiddenInput(), required=False)

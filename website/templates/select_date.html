@@ -3,7 +3,7 @@
 {% block styles %}
   {{ block.super }}
   <style>
-    body {
+    body.page-select-date {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -13,7 +13,7 @@
       background-color: #f4f4f4;
     }
 
-    form {
+    body.page-select-date form {
       background-color: #ffffff;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
@@ -21,12 +21,38 @@
       width: 300px;
     }
 
-    h2 {
+    body.page-select-date h2 {
       text-align: center;
       color: #333333;
     }
 
-    button {
+    body.page-select-date ul.messages {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    body.page-select-date ul.messages li {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 4px;
+    }
+
+    body.page-select-date ul.messages li.success {
+      background-color: #4CAF50;
+      color: #ffffff;
+    }
+
+    body.page-select-date ul.messages li.error {
+      background-color: #ff5252;
+      color: #ffffff;
+    }
+
+    body.page-select-date input[type="hidden"] {
+      display: none;
+    }
+
+    body.page-select-date button {
       background-color: #4CAF50;
       color: #ffffff;
       border: none;
@@ -38,14 +64,14 @@
       margin: 0 auto; /* Center the button */
     }
 
-    button:hover {
+    body.page-select-date button:hover {
       background-color: #45a049;
     }
   </style>
 {% endblock %}
 
 {% block content %}
-  <form method="post" action="{% url 'select_date' doctor_id=doctor.d_nid %}">
+  <form method="post" action="{% url 'select_date' doctor_id=doctor.d_nid %}" class="page-select-date">
     {% csrf_token %}
     
     <h2>Select Date</h2>

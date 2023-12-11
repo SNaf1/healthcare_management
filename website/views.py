@@ -298,7 +298,7 @@ def book_hospital_room_view(request):
 
     # Check if the patient has already booked a room
     if HospitalRoom.objects.filter(patient=request.user).exists():
-        messages.error(request, 'You already have a room booked. Cancel your booking to book another room, as seats are limited.')
+        messages.error(request, 'You already have a room booked.')
         return redirect('loggedin')
 
     if request.method == 'POST':
@@ -386,4 +386,6 @@ def doctor_review_success(request):
 
 def all_doctors(request):
     doctors = Doctor.objects.all()
+    for doctor in doctors:
+        doctor.avg_review = doctor.average_review()
     return render(request, 'all_doctors.html', {'doctors': doctors})
