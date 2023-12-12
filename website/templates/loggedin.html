@@ -1,56 +1,211 @@
-{% extends 'base.html' %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-{% block title %}Welcome, {{ user.name }}{% endblock %}
+     <title>{% block title %}Welcome, {{ user.name }}{% endblock %}</title>
+     <!-- Add your meta tags and other head elements here -->
 
+     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+     <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+     <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+     <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
 
-{% block content %}
-  <h2>Welcome, {{ user.name }}</h2>
-  <section class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon icon-bar"></span>
-                <span class="icon icon-bar"></span>
-                <span class="icon icon-bar"></span>
-            </button>
+     <!-- MAIN CSS -->
+     <link rel="stylesheet" href="{% static 'css/tooplate-style.css' %}">
+
+     <style>
+       body {
+         display: flex;
+         flex-direction: column;
+         min-height: 100vh;
+         margin: 0;
+       }
+
+       /* Set a flex-grow property for the content to fill available space */
+       main {
+         flex-grow: 1;
+       }
+
+       /* Style the footer as desired */
+       footer {
+         background-color: rgb(28, 27, 27);
+         color: #ffffff;
+         padding: 20px 0;
+       }
+
+      /*loggedin style*/
+       nav ul {
+         list-style: none;
+         padding: 0;
+         margin: 0;
+         display: flex;
+         justify-content: space-around;
+         background-color: #4285f4;
+         color: white;
+       }
+     
+       nav a {
+         text-decoration: none;
+         color: white;
+       }
+     
+       nav ul ul {
+         display: none;
+         position: absolute;
+         top: 100%;
+         left: 0;
+         background-color: #4285f4;
+       }
+     
+       nav ul li:hover > ul {
+         display: inherit;
+       }
+     
+       nav ul ul li {
+         width: 200px;
+         float: none;
+         display: list-item;
+         position: relative;
+       }
+     
+       .button-images-container {
+         display: flex;
+         justify-content: space-around;
+         margin-top: 20px;
+       }
+     
+       .button-images-container img {
+         width: 200px;
+         height: auto;
+         border: 2px solid #4285f4;
+         border-radius: 5px;
+         margin: 0 10px;
+         cursor: pointer;
+         transition: transform 0.3s;
+       }
+     
+       .button-images-container img:hover {
+         transform: scale(1.1);
+       }
+     </style>
+    
+    
+
+</head>
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+
+     <!-- PRE LOADER -->
+     <section class="preloader">
+          <div class="spinner">
+               <span class="spinner-rotate"></span>
+          </div>
+     </section>
+
+     <!-- HEADER -->
+     <header>
+          <div class="container">
+               <div class="row">
+                    <div class="col-md-4 col-sm-5">
+                         <p>Welcome to a Professional Health Care</p>
+                    </div>
+                    <div class="col-md-8 col-sm-7 text-align-right">
+                         <!-- Your header content here -->
+                    </div>
+               </div>
+          </div>
+     </header>
+
+     <!-- CONTENT -->
+     <main>
+      
+
+      {% block content %}
+        <h2>Welcome, {{ user.name }}</h2>
+        <section class="navbar navbar-default navbar-static-top" role="navigation">
+          <div class="container">
+              <div class="navbar-header">
+                  <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                      <span class="icon icon-bar"></span>
+                      <span class="icon icon-bar"></span>
+                      <span class="icon icon-bar"></span>
+                  </button>
+                  <!-- LOGO TEXT HERE -->
+                <a href="/" class="navbar-brand"><i class="fa fa-h-square"></i>OpenArc Healthcare</a>
+              </div>
+              <!-- MENU LINKS -->
+              <div class="collapse navbar-collapse">
+                  <ul class="nav navbar-nav navbar-right">
+                      <li><a href="{% url 'profile' %}">Profile</a></li>
+                      <li><a href="{% url 'my_appointments' %}">My Appointments</a></li>
+                      <li><a href="{% url 'all_hospitals' %}">All Hospital Branches</a></li>
+                      <li><a href="{% url 'all_doctors' %}">All Doctors</a></li>
+                      <li><a href="{% url 'logout' %}">Logout</a></li>
+                      
+                      <!-- <li><a href="{% url 'logout' %}">Logout</a></li> -->
+                      <!-- Add your other menu items here -->
+                  </ul>
+              </div>
+          </div>
+      </section>
+      
+        <!-- Display messages -->
+        {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      
+       
+        <!-- Middle content with images acting as buttons -->
+        <div class="button-images-container">
+          <a href="{% url 'book_appointment' %}">
+            <img src="{% static 'images/Book-Doctor-Appointment.jpg' %}" class="img-responsive" alt="Book Doctor Appointment">
+          </a>
+          <a href="{% url 'book_hospital_room' %}">
+            <img src="{% static 'images/Book-Hospital-Room.jpg' %}" class="img-responsive" alt="Book Hospital Room">
+          </a>
         </div>
-        <!-- MENU LINKS -->
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="{% url 'profile' %}">Profile</a></li>
-                <li><a href="{% url 'my_appointments' %}">My Appointments</a></li>
-                <li><a href="{% url 'all_hospitals' %}">All Hospital Branches</a></li>
-                <li><a href="{% url 'all_doctors' %}">All Doctors</a></li>
-                <li><a href="{% url 'logout' %}">Logout</a></li>
-                
-                <!-- <li><a href="{% url 'logout' %}">Logout</a></li> -->
-                <!-- Add your other menu items here -->
-            </ul>
+      
+        <!-- Additional content if needed -->
+      
+      {% endblock %}
+     </main>
+
+     <!-- FOOTER -->
+     <footer data-stellar-background-ratio="5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 border-top">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="copyright-text">
+                            <p>Copyright &copy; 2017 Your Company | Design: <a
+                                    href="http://www.tooplate.com" target="_parent">Tooplate</a></p>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-2 text-align-center">
+                        <div class="angle-up-btn">
+                            <a href="#top" class="smoothScroll wow fadeInUp" data-wow-delay="1.2s"><i
+                                    class="fa fa-angle-up"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
+    </footer>
 
-  <!-- Display messages -->
-  {% if messages %}
-    <ul class="messages">
-      {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
+     <!-- SCRIPTS -->
+     <script src="{% static 'js/jquery.js' %}"></script>
+     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+     <script src="{% static 'js/jquery.sticky.js' %}"></script>
+     <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+     <script src="{% static 'js/wow.min.js' %}"></script>
+     <script src="{% static 'js/smoothscroll.js' %}"></script>
+     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+     <script src="{% static 'js/custom.js' %}"></script>
 
- 
-  <!-- Middle content with images acting as buttons -->
-  <div class="button-images-container">
-    <a href="{% url 'book_appointment' %}">
-      <img src="{% static 'images/Book-Doctor-Appointment.jpg' %}" class="img-responsive" alt="Book Doctor Appointment">
-    </a>
-    <a href="{% url 'book_hospital_room' %}">
-      <img src="{% static 'images/Book-Hospital-Room.jpg' %}" class="img-responsive" alt="Book Hospital Room">
-    </a>
-  </div>
-
-  <!-- Additional content if needed -->
-
-{% endblock %}
+</body>
+</html>

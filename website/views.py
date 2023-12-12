@@ -381,7 +381,7 @@ def doctor_review_form(request):
     return render(request, 'doctor_review_form.html', {'form': form, 'doctor': doctor})
 
 def doctor_review_success(request):
-    return render(request, 'doctor_review_success.html')
+    return render(request, 'review_success.html')
 
 
 def all_doctors(request):
