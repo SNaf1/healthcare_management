@@ -17,6 +17,7 @@ urlpatterns = [
     path('book-hospital-room/', views.book_hospital_room_view, name='book_hospital_room'),
     path('select-room/<str:branch_id>/', views.select_room_view, name='select_room'),
     path('booking-successful/<str:branch_id>/<str:room_id>/', views.booking_successful_view, name='booking_successful'),
+    path('search-doctor/', views.search_doctor_view, name='search_doctor'),
     #Tanzuma
     path('my_appointments/', views.my_appointments_view, name='my_appointments'),
     path('my_room_bookings/', views.my_room_bookings_view, name='my_room_bookings'),

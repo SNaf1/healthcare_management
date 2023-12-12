@@ -135,6 +135,7 @@ def update_medical_history(request):
     return render(request, 'med_his_update.html', context)
 
 #Tanzuma's code
+@login_required
 def my_appointments_view(request):
     if request.user.is_authenticated:
         # Filter appointments for the logged-in user
@@ -144,6 +145,7 @@ def my_appointments_view(request):
         # Redirect to login page if user not logged in
         return redirect('login')
 
+@login_required
 def delete_appointment_view(request, appointment_id):
     appointment = get_object_or_404(Appointment, a_id=appointment_id)
 
@@ -360,6 +362,15 @@ def booking_successful_view(request, branch_id, room_id):
     booked_room = get_object_or_404(HospitalRoom, room_no=room_id, branch=hospital_branch)
 
     return render(request, 'room_booking_successful.html', {'hospital_branch': hospital_branch, 'booked_room': booked_room})
+
+
+def search_doctor_view(request):
+    if 'doctor_name' in request.GET:
+        doctor_name = request.GET['doctor_name']
+        doctors = Doctor.objects.filter(name__icontains=doctor_name)
+        return render(request, 'search_doctor.html', {'doctors': doctors})
+    else:
+        return render(request, 'search_doctor.html', {'doctors': []})
 
 
 #Walid's code

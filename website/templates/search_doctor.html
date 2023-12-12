@@ -1,0 +1,30 @@
+<!-- search_doctor.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Doctor Search Results{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Doctor Search Results</h2>
+    {% if doctors %}
+        <ul class="list-group">
+            {% for doctor in doctors %}
+                <li class="list-group-item">
+                    <strong>Name:</strong> {{ doctor.name }}
+                    <br>
+                    <strong>Speciality:</strong> {{ doctor.speciality }}
+                    <br>
+                    <strong>Degree:</strong> {{ doctor.degree }}
+                    <br>
+                    <strong>Hospitals:</strong> {{ doctor.get_hospital_list }}
+                    <br>
+                    <strong>Average Review:</strong> {{ doctor.average_review }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No doctors found with the provided name.</p>
+    {% endif %}
+</div>
+{% endblock %}
