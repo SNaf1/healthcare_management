@@ -79,7 +79,7 @@ Feel free to explore and make the most of the system!
 
 ## Contribution
 
-Contributions are welcome! If you'd like to contribute to the development of this system, please follow the guidelines in the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+Contributions are welcome! If you'd like to contribute to the development of this system.
 
 ## License
 
