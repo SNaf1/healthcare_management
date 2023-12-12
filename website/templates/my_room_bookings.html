@@ -1,0 +1,28 @@
+<!-- my_room_bookings.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Room Bookings{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">My Room Bookings</h2>
+    <ul class="list-group">
+        {% for room_booking in room_bookings %}
+            <li class="list-group-item">
+                <strong>Branch:</strong> {{ room_booking.branch }}
+                <br>
+                <strong>Room No:</strong> {{ room_booking.room_no }}
+                <br>
+                <strong>Status:</strong> {% if room_booking.is_available %}Available{% else %}Booked{% endif %}
+
+                <!-- Form for deleting the room booking -->
+                <form method="post" action="{% url 'delete_room_booking' room_booking.id %}" class="mt-2">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete Room Booking</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

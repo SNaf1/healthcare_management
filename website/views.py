@@ -153,6 +153,29 @@ def delete_appointment_view(request, appointment_id):
 
     return redirect('my_appointments')
 
+@login_required
+def my_room_bookings_view(request):
+    if request.user.is_authenticated:
+        # Filter room bookings for the logged-in user
+        room_bookings = HospitalRoom.objects.filter(patient=request.user)
+        return render(request, 'my_room_bookings.html', {'room_bookings': room_bookings})
+    else:
+        # Redirect to login page if the user is not logged in
+        return redirect('login')
+
+@login_required
+def delete_room_booking_view(request, room_id):
+    room_booking = get_object_or_404(HospitalRoom, id=room_id)
+
+    # Check if the logged-in user owns the room booking
+    if request.user == room_booking.patient:
+        room_booking.delete()
+        messages.success(request, 'Room booking deleted successfully.')
+    else:
+        messages.error(request, 'You do not have permission to delete this room booking.')
+
+    return redirect('my_room_bookings')
+
 def book_appointment_view(request):
     if request.method == 'POST':
         form = DoctorForm(request.POST)
