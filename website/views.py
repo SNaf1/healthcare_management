@@ -246,7 +246,7 @@ def select_time_view(request, doctor_id, date):
         form = TimeForm(doctor=doctor, date=date)
 
 
-    # Debugging statements
+    # Debugging
     print("Doctor:", doctor)
     print("Date:", date)
     print("Available Times:", Schedule.objects.filter(doctor=doctor, date=date).values_list('start_time', flat=True))
@@ -283,11 +283,10 @@ def confirm_payment_view(request, doctor_id, date, time):
         if payment_form.is_valid():
             print("Form is valid")
             
-            # Create a Payment instance and populate its fields
+            # Creating payment instance
             payment = Payment()
             payment.method = payment_form.cleaned_data['method']
             payment.appointment = appointment
-            # payment.calculate_total_price()
             payment.save()
             
             # Update appointment status to 'Confirmed'
@@ -298,9 +297,8 @@ def confirm_payment_view(request, doctor_id, date, time):
                     'id': appointment.a_id,
                 }
 
-            # Store the appointment information in the session
+            # Storing appointment info for passsing to next step
             request.session['selected_appointment'] = appointment_info
-            # request.session['payment'] = payment
 
             return redirect('appointment_success')
         else:
