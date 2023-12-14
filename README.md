@@ -26,7 +26,7 @@ Maintaining patient records in a hospital and booking appointments can be tediou
 
 This project caters to the needs of both patients and hospitals. Some of the main features include:
 
-To use this system:
+Patient Side:
 
 1. **Patient Signup & Sign in:**
    - Create a new account or sign in if you are an existing user.
@@ -61,6 +61,22 @@ To use this system:
 11. **Book Hospital Rooms:**
     - Reserve hospital rooms for your stay.
    
+Admin Side:
+
+1. **See all tables from the admin panel:**
+   - Check all the data of the patient and alter them easily.
+
+2. **Add Doctors and their Schedule:**
+   - Directly add doctors, their attributes, and schedule.
+  
+3. **Manage Room Bookings**
+   - Check which room is booked and make them available for booking again.
+  
+4. **View Payment Details**
+   - View payment details of appointment bookings.
+
+  And many more management controls.
+
 ## ER Diagram 
 ![ER](./diagrams/ER.png)
 
