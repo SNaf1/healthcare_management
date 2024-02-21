@@ -26,21 +26,7 @@ Maintaining patient records in a hospital and booking appointments can be tediou
 
 This project caters to the needs of both patients and hospitals. Some of the main features include:
 
-- **Patient Signup & Sign in**
-- **Patient Details Page**
-- **Account Edit and Deletion**
-- **Medical History Add, Update & Delete**
-- **Doctor Information**
-- **Search Doctors**
-- **Save Payment ID (No gateway)**
-- **Doctor Reviews for Informed Decision-Making**
-- **Hospital Reviews**
-- **Schedule Appointments with Doctors**
-- **Book Hospital Rooms**
-
-## Usage
-
-To use this system:
+Patient Side:
 
 1. **Patient Signup & Sign in:**
    - Create a new account or sign in if you are an existing user.
@@ -58,7 +44,7 @@ To use this system:
    - Access details of doctors, including reviews from other patients.
 
 6. **Search Doctors:**
-   - Find doctors based on various criteria.
+   - Find doctors based on name and check details and review.
 
 7. **Save Payment ID:**
    - Save payment IDs for reference (No payment gateway integrated).
@@ -74,8 +60,61 @@ To use this system:
 
 11. **Book Hospital Rooms:**
     - Reserve hospital rooms for your stay.
+   
+Admin Side:
+
+1. **See all tables from the admin panel:**
+   - Check all the data of the patient and alter them easily.
+
+2. **Add Doctors and their Schedule:**
+   - Directly add doctors, their attributes, and schedule.
+  
+3. **Manage Room Bookings**
+   - Check which room is booked and make them available for booking again.
+  
+4. **View Payment Details**
+   - View payment details of appointment bookings.
+
+  And many more management controls.
+
+## ER Diagram 
+![ER](./diagrams/ER.png)
+
+## Schema Diagram
+![Schema](./diagrams/Schema.png)
 
 Feel free to explore and make the most of the system!
+
+## Clone and Setup
+
+1. **Clone the Repository:**
+   ```bash
+   git clone <repository-url>
+
+2. **Install Dependencies:** (Preferably in a virtual environment)
+
+   ```bash
+   pip install -r requirements.txt
+
+3. **Run Migrations:**
+
+   ```bash
+   python manage.py migrate
+
+4. **Create a Superuser (For Admin Panel):**
+
+   ```bash
+   python manage.py createsuperuser
+
+5. **Run the Development Server:**
+
+   ```bash
+   python manage.py runserver
+
+5. **Explore the Web Application:**
+    Open a web browser and go to http://localhost:8000/
+
+
 
 ## Contribution
 
