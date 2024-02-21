@@ -14,7 +14,6 @@ class Hospital(models.Model):
     def address(self):
         return f"{self.road_no}, {self.city}, {self.zip_code}"
 
-    #Walid's code
     def average_review(self):
         reviews = self.patienthospitalevaluation_set.all()
         if reviews.exists():

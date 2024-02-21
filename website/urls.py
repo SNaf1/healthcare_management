@@ -18,15 +18,12 @@ urlpatterns = [
     path('select-room/<str:branch_id>/', views.select_room_view, name='select_room'),
     path('booking-successful/<str:branch_id>/<str:room_id>/', views.booking_successful_view, name='booking_successful'),
     path('search-doctor/', views.search_doctor_view, name='search_doctor'),
-    #Tanzuma
     path('my_appointments/', views.my_appointments_view, name='my_appointments'),
     path('my_room_bookings/', views.my_room_bookings_view, name='my_room_bookings'),
     path('delete_room_booking/<int:room_id>/', views.delete_room_booking_view, name='delete_room_booking'),
-    #Ridhwan's path
     path('med_his_update/', views.update_medical_history, name='update_medical_history'),
     path('edit/', views.edit, name='edit'),
     path('delete/', views.delete_account, name='delete_account'),
-    #walid's path
     path('review/', views.review_form, name='review_form'),
     path('review_success/',views.review_success,name= 'review_success'),
     path('all_hospitals/', views.all_hospitals, name='all_hospitals'),

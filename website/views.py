@@ -15,7 +15,7 @@ def home(request):
         
     return render(request, 'home.html', {})
 
-#Jumanah's code
+
 def signup_view(request):
     if request.method == 'POST':
         form = PatientForm(request.POST)
@@ -69,7 +69,7 @@ def profile_view(request):
     }
     return render(request, 'profile.html', context)
 
-#Ridhwan's part
+
 @login_required
 def edit(request):
     user = request.user
@@ -134,7 +134,7 @@ def update_medical_history(request):
 
     return render(request, 'med_his_update.html', context)
 
-#Tanzuma's code
+
 @login_required
 def my_appointments_view(request):
     if request.user.is_authenticated:
@@ -371,7 +371,7 @@ def search_doctor_view(request):
         return render(request, 'search_doctor.html', {'doctors': []})
 
 
-#Walid's code
+
 @login_required(login_url='login')  
 def review_form(request):
     if request.method == 'POST':

@@ -46,18 +46,6 @@ class DateForm(forms.Form):
             self.fields['date'].choices = [(date, date) for date in available_dates]
             self.fields['doctor'].initial = str(doctor.d_nid)
 
-    # def clean_date(self):
-    #     date = self.cleaned_data.get('date')
-    #     doctor_id = self.cleaned_data.get('doctor_id')
-
-    #     if date and doctor_id:
-    #         # Check if the selected date is available for the selected doctor
-    #         available_dates = Schedule.objects.filter(doctor_id=doctor_id).values_list('date', flat=True)
-
-    #         if date not in available_dates:
-    #             raise forms.ValidationError("This date is not available for the selected doctor.")
-
-    #     return date
 
 
 class TimeForm(forms.Form):
@@ -101,7 +89,6 @@ class HospitalRoomForm(forms.Form):
     def label_from_instance(self, obj):
         return f"Room {obj.room_no}"
 
-#Ridhan's code
 class DiseaseForm(forms.ModelForm):
     class Meta:
         model = Disease
@@ -141,7 +128,6 @@ class MedicalHistoryUpdateForm(forms.ModelForm):
         model = MedicalHistory
         exclude = ['patient']  # Add other fields if needed
 
-#walid's code
 class PatientHospitalEvaluationForm(forms.ModelForm):
     class Meta:
         model = PatientHospitalEvaluation
