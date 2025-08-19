@@ -1,4 +1,16 @@
-# Hospital Management System
+<div align="center">
+
+# 🏥 Healthcare Management System
+
+<p>A comprehensive system built with Django to streamline hospital operations, manage patient records, and simplify the appointment booking process for patients and doctors.</p>
+
+<p>
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python Badge">
+  <img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white" alt="Django Badge">
+  <img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge" alt="License Badge">
+</p>
+
+</div>
 
 ## Introduction
 
